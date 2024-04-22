@@ -20,14 +20,22 @@ export const Connect = ({ children }) => {
     const currentChainId = await window.ethereum.request({
       method: "eth_chainId",
     });
+    console.log(currentChainId)
     return AUTHORIZED_CHAIN_ID.includes(currentChainId.toLowerCase());
   };
 
   const refreshNetwork = useCallback(async () => {
-    if (await hasValidNetwork()) {
-      await createFhevmInstance();
-      setValidNetwork(true);
-    } else {
+    try {
+      const valid = await hasValidNetwork();
+      console.log(valid);
+      if (valid) {
+        await createFhevmInstance();
+        setValidNetwork(true);
+      } else {
+        setValidNetwork(false);
+      }
+    } catch (error) {
+      console.error("Error refreshing network:", error);
       setValidNetwork(false);
     }
   }, []);
