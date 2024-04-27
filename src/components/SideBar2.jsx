@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import bitPng from "../assets/bit.png";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png"
-const SideBar = () => {
+const SideBar2 = () => {
   const [activeHeading, setActiveHeading] = useState(null);
   const navigate=useNavigate()
 
@@ -23,9 +23,9 @@ const SideBar = () => {
         <h1 className="-mb-[25%] mt-[30%] ml-5">Menu</h1>
         <h1
           className={`text-[#212427] items-center rounded-xl p-2 mx-[10%] mt-20 flex gap-[10px] hover:bg-[#F4F4F4] ${
-            isHeadingActive("Allocations") ? "bg-[#F4F4F4]" : "bg-white"
+            isHeadingActive("Dashboard") ? "bg-[#F4F4F4]" : "bg-white"
           }`}
-          onClick={() => handleClick("Allocations")}
+          onClick={() => handleClick("Dashboard")}
 
         >
           <svg
@@ -52,7 +52,7 @@ const SideBar = () => {
               </clipPath>
             </defs>
           </svg>
-          Allocations
+          Dashboard
         </h1>
         <h1
           className={`text-[#212427] mx-[10%] items-center rounded-lg p-2 m-2 flex gap-[10px] hover:bg-[#F4F4F4] ${
@@ -115,4 +115,4 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+export default SideBar2;
