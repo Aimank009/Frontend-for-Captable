@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import NavBar2 from "../Components/NavBar2";
 import SideBar from "../Components/SideBar";
 import cvImage from "../assets/cvImage.png";
 import AddEmployee from "../Components/AddEmployee";
@@ -8,7 +7,7 @@ import data from "../data/data.json"
 import SearchField from "../Components/SearchField";
 import ActualDashboard from "../Components/ActualDashboard";
 import DataView from "../Components/DataView";
-import NavBar from "../Components/NavBar";
+
 import { Connect } from "../Connect";
 const Allocations = ({ children }) => {
     const [open, setOpen] = useState(false);

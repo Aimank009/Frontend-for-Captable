@@ -1,7 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import NavBar from '../Components/NavBar'
-import NavBar2 from "../Components/NavBar2";
 import { Connect } from "../Connect";
 import logo from '../assets/logo.png'
 const LandingPage = () => {

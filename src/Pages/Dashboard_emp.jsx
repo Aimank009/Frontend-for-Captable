@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 
-import SideBar from "../Components/SideBar";
-import NavBar2 from "../Components/NavBar2";
 import SideBar2 from "../Components/SideBar2";
 import { Connect } from "../Connect";
-import VestingSchedule from "../Components/VestingSchedule";
 import ClaimToken from "../Components/ClaimToken";
 import SteppedGraph from "../Components/MyChart";
-// import SteppedGraph from '../Components/MyChart'
 
 export const claimed = {
   claim: "24",

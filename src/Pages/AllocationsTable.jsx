@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import VestingSchedule from "../Components/VestingSchedule";
 import ClickToViewContent from "../Components/Clicktoview";
-import SearchField from "../Components/SearchField";
-import data from "../data/data.json";
-import ActualDashboard from "../Components/ActualDashboard";
 const AllocationsTable = () => {
   const [vesting, setVesting] = useState(false);
   const handleVestingClick = () => {
