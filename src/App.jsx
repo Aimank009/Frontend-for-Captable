@@ -1,7 +1,7 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import { init, getInstance } from "./utils/fhevm";
-import { Connect } from "./Connect";
+import { init } from "./utils/fhevm";
+
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./Pages/LandingPage";
