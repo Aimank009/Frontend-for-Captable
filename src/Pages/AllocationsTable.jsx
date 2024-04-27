@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import VestingSchedule from "../Components/VestingSchedule";
-import ClickToViewContent from "../Components/Clicktoview";
+import VestingSchedule from "../Components/VestingSchedule.jsx";
+import ClickToViewContent from "../Components/Clicktoview.jsx";
 const AllocationsTable = () => {
   const [vesting, setVesting] = useState(false);
   const handleVestingClick = () => {

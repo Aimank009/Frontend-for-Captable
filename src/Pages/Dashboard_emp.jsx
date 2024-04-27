@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-
-import SideBar2 from "../Components/SideBar2";
-import { Connect } from "../Connect";
-import ClaimToken from "../Components/ClaimToken";
-import SteppedGraph from "../Components/MyChart";
+import SideBar2 from "../Components/SideBar2.jsx";
+import { Connect } from "../Connect.jsx";
+import ClaimToken from "../Components/ClaimToken.jsx";
+import SteppedGraph from "../Components/MyChart.jsx";
 
 export const claimed = {
   claim: "24",

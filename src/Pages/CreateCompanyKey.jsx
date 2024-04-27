@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import logo_2 from "../assets/logo_2.png";
-import { captableContract, getInstance } from "../utils/fhevm";
-import { getReencryptPublicKey } from "../utils/RencryptPublicKey";
+import { captableContract, getInstance } from "../utils/fhevm.jsx";
+import { getReencryptPublicKey } from "../utils/RencryptPublicKey.jsx";
 
 
 import { Buffer } from "buffer";

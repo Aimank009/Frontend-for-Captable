@@ -4,14 +4,14 @@ import { init } from "./utils/fhevm";
 
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LandingPage from "./Pages/LandingPage";
-import CreateCompany from "./Pages/CreateCompany";
-import CreateCompanyKey from "./Pages/CreateCompanyKey";
-import CompanyKey from "./Pages/CompanyKey";
-import Allocations from "./Pages/Allocations";
-import AlreadyOwner from "./Pages/AlreadyOwner";
-import Dashboard_emp from "./Pages/Dashboard_emp";
-import EmployeeLogin from "./Pages/EmployeeLogin";
+import LandingPage from "./Pages/LandingPage.jsx";
+import CreateCompany from "./Pages/CreateCompany.jsx";
+import CreateCompanyKey from "./Pages/CreateCompanyKey.jsx";
+import CompanyKey from "./Pages/CompanyKey.jsx";
+import Allocations from "./Pages/Allocations.jsx";
+import AlreadyOwner from "./Pages/AlreadyOwner.jsx";
+import Dashboard_emp from "./Pages/Dashboard_emp.jsx";
+import EmployeeLogin from "./Pages/EmployeeLogin.jsx";
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(true);

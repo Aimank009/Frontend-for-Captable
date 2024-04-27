@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import SideBar from "../Components/SideBar";
+import SideBar from "../Components/SideBar.jsx";
 import cvImage from "../assets/cvImage.png";
-import AddEmployee from "../Components/AddEmployee";
-import AllocationsTable from "./AllocationsTable";
+import AddEmployee from "../Components/AddEmployee.jsx";
+import AllocationsTable from "./AllocationsTable.jsx";
 import data from "../data/data.json"
-import SearchField from "../Components/SearchField";
-import ActualDashboard from "../Components/ActualDashboard";
-import DataView from "../Components/DataView";
+import SearchField from "../Components/SearchField.jsx";
+import ActualDashboard from "../Components/ActualDashboard.jsx";
+import DataView from "../Components/DataView.jsx";
 
 import { Connect } from "../Connect";
 const Allocations = ({ children }) => {

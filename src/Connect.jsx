@@ -1,5 +1,5 @@
 import { BrowserProvider } from "ethers";
-import { createFhevmInstance } from "./utils/fhevm";
+import { createFhevmInstance } from "./utils/fhevm.jsx";
 import { useState, useCallback, useEffect, useMemo, React } from "react";
 
 const AUTHORIZED_CHAIN_ID = ["0x2382", "0x2383"]; // 9090, 9091
