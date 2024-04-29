@@ -12,7 +12,7 @@ const AllocationsTable = () => {
   };
 
   const handleRefresh = () => {
-    console.log("Refreshing");
+    window.location.reload(); // Reload the page
   };
 
   return (

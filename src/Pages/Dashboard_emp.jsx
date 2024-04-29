@@ -16,29 +16,35 @@ export default function Dashboard_emp() {
   const handleClick = () => {
     setOpen(true);
   };
+  const handleRefresh = () => {
+    window.location.reload(); // Reload the page
+  };
 
   return (
     <>
       <div className="flex h-[100vh]">
         <SideBar2 />
         <div className="flex-1 overflow-auto">
-          <Connect>{(account, provider) => null}</Connect>
+          <div className="pt-1">
+            <Connect>{(account, provider) => null}</Connect>
+          </div>
+          
           {/* Manish verma navbar */}
           <div>
             {/* {open && <div className="fixed inset-0 bg-black bg-opacity-50 z-10"></div>} */}
-            <div className=" flex justify-between items-center bg-white w-[100%] h-[80px]   border-b border-gray-300  mr-[10px] ">
+            <div className=" flex justify-between items-center bg-white w-[100%] h-[10vh] border  border-gray-300  mr-[10px] ">
               <h1 className="ml-[20px] text-2xl font-source-code-pro font-normal">
                 Manish Verma
               </h1>
 
-              <div className="flex gap-2">
+              <div className="flex gap-5 w-[50%] justify-end items-end">
                 <button
                   onClick={handleClick}
-                  className="text-[#3A74F2]  w-[161px] font-medium h-[48px] border rounded-[12px] border-[#3A74F2]"
+                  className="font-source-code-pro text-center text-[#3A74F2] w-[30%] p-2 font-medium border rounded-lg border-[#3A74F2]"
                 >
                   Claim Tokens
                 </button>
-                <button className="font-medium flex items-center text-[#3A74F2] w-[161px] gap-2 h-[48px] border rounded-[12px] border-[#3A74F2]">
+                <button onClick={handleRefresh}  className="font-source-code-pro flex text-center text-[#3A74F2] w-[30%] mr-[5%] p-2 font-medium border rounded-lg border-[#3A74F2]">
                   <svg
                     className="pl-1"
                     width="24"

@@ -140,10 +140,10 @@ export const Connect = ({ children }) => {
   };
   const connectInfos = (
     <div className="Connect__info">
-      <div className="flex items-center justify-end  -mt-[1%] pb-[1%]">
+      <div className="flex items-center justify-end  -mt-[1%] py-[1%]">
         {!connected && (
           <button
-            className="Connect__button font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px]  mr-[2.5%]  text-[#FFFFFF]  "
+            className="Connect__button font-source-code-pro cursor-pointer rounded-lg w-[200px] h-[40px] mt-[2px] bg-[#3A74F2] px-[24px]   mr-[2.5%]  text-[#FFFFFF]  "
             onClick={connect}
           >
             Connect wallet

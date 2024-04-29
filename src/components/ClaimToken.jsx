@@ -1,17 +1,46 @@
 import React, { useState } from 'react';
+import { captableContract, getInstance } from '../utils/fhevm';
+import { getReencryptPublicKey } from '../utils/RencryptPublicKey';
+import { claimed } from '../Pages/Dashboard_emp';
+
+
+
+const CAPTABLE_ADDRESS = "0x13D6c7652EaD49b377c9e7E5021D11FfaF032342";
+const CAPTABLE_DATA="0xB116e476Ff26DFB937012575Ba9920012bA2Fad2";
 
 const ClaimToken = ({ onClose }) => {
   const [claimAmount, setClaimAmount] = useState('');
 
   const handleChange = (e) => {
+    e.preventDefault()
     setClaimAmount(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // You can use `claimAmount` for further processing, such as submitting the claim request.
-    console.log('Claiming tokens:', claimAmount);
-    // Reset the input field after submission
+    try {
+      const instance = await getInstance();
+      const reencrypt = await getReencryptPublicKey(CAPTABLE_ADDRESS);
+      console.log(reencrypt);
+      const contractInstance=await captableContract()
+
+      const ciphertext=await instance.encrypt32(BigInt(claimAmount));
+      console.log(ciphertext)
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+      console.log(accounts)
+      const key=await contractInstance.adminKey(accounts[0]);
+      console.log(key)
+
+      const claimTokens=await contractInstance.claim(ciphertext,key)
+      console.log("Token",claimTokens)
+
+      const claimedTokens=await contractInstance.claimableAmount(key)  
+      console.log("Claimed",claimedTokens);
+
+    } catch (error) {
+      console.log("error",error)
+    }
     setClaimAmount('');
   };
 

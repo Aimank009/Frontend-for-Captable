@@ -1,4 +1,4 @@
-import { getInstance } from "./fhevm";
+import { getInstance } from "./fhevm.jsx";
 
 export const getReencryptPublicKey = async (contractAddress) => {
   const instance = await getInstance();

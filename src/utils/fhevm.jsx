@@ -1,18 +1,26 @@
 import { BrowserProvider, AbiCoder, Contract } from "ethers";
 import { initFhevm, createInstance } from "fhevmjs";
 
-import ectABI from "../EncryptedCapTable (3).json";
-
+import captableAddress from "../JSON/EncryptedCapTable (4).json";
+import captableData from "../JSON/CapTableData (2).json";
+import vestingabi from "../JSON/Vesting (1).json"
 export const init = async () => {
   await initFhevm();
 };
 
 const FHE_LIB_ADDRESS = "0x000000000000000000000000000000000000005d";
-const CONTRACT_ADDRESS = "0xA4c5C4c33Bc4c55a0d73F3692311334546FEc78c";
+const CAPTABLE_ADDRESS = "0x13D6c7652EaD49b377c9e7E5021D11FfaF032342";
+const CAPTABLE_DATA="0x765f69182281d43E1692629303C0456743F09369";
+const VESTING_ADDRESS="0xc803d26f2199d8DE7545b32976ad4763b47B692c"
 
 export const provider = new BrowserProvider(window.ethereum);
+export let signer;
+let instance; 
 
-let instance; // declare instance here so it's accessible globally
+export const setSigner = async () => {
+  signer = await provider.getSigner();
+};
+
 
 export const createFhevmInstance = async () => {
   const network = await provider.getNetwork();
@@ -35,6 +43,16 @@ export const getInstance = async () => {
 };
 
 export const captableContract = async () => {
-  const signer = await provider.getSigner();
-  return new Contract(CONTRACT_ADDRESS, ectABI.abi, signer);
+  await setSigner();
+  return new Contract(CAPTABLE_ADDRESS, captableAddress.abi, signer);
 };
+
+export const captableDataContract = async () => {
+  await setSigner();
+  return new Contract(CAPTABLE_DATA, captableData.abi, signer);
+};
+
+export const vestingContract=async()=>{
+  await setSigner();
+  return new Contract(VESTING_ADDRESS,vestingabi.abi,signer)
+}

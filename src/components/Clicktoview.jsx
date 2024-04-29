@@ -1,10 +1,58 @@
 import React, { useState } from "react";
+import { captableContract, captableDataContract, getInstance } from "../utils/fhevm";
+import { getReencryptPublicKey } from "../utils/RencryptPublicKey";
+
+
+const CAPTABLE_ADDRESS = "0x13D6c7652EaD49b377c9e7E5021D11FfaF032342";
+const CAPTABLE_DATA="0x765f69182281d43E1692629303C0456743F09369";
 
 function ClickToViewContent() {
   const [isVisible, setIsVisible] = useState(false);
-
-  const handleClick = () => {
+  const [allocations,setAllocations]=useState(0)
+  const [unlocked,setUnlocked]=useState(0)
+  const [employee,setEmployee]=useState(0)
+  const handleClick =async () => {
     setIsVisible(true);
+    try{
+      const instance = await getInstance();
+      const reencrypt = await getReencryptPublicKey(CAPTABLE_DATA);
+      console.log(reencrypt);
+      console.log(await instance.hasKeypair(CAPTABLE_DATA));
+      const contractInstance=await captableContract();
+
+
+      const contractDataInstance = await captableDataContract();
+
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+      console.log(accounts)
+      const key=await contractInstance.adminKey(accounts[0]);
+      console.log(key)
+
+       const companyEmploys =await contractDataInstance.viewCompanyemploys(key,reencrypt.publicKey, reencrypt.signature)
+       console.log("TX",companyEmploys);
+       const employee=await instance.decrypt(CAPTABLE_DATA,companyEmploys)
+       setEmployee(employee.toString())
+       console.log(employee);
+
+       const companyTotalFunds =await contractDataInstance.viewCompanytotalFund(key,reencrypt.publicKey, reencrypt.signature)
+       console.log("TX",companyTotalFunds);
+       const alloc=await instance.decrypt(CAPTABLE_DATA,companyTotalFunds)
+       setAllocations(alloc.toString())
+       console.log(allocations);
+
+       const companyTotalLocked =await contractDataInstance.viewCompanytotalLocked(key,reencrypt.publicKey, reencrypt.signature)
+       console.log("TX",companyTotalLocked);
+       const unlock=await instance.decrypt(CAPTABLE_DATA,companyTotalLocked)
+       setUnlocked(unlock.toString())
+       console.log(unlocked);
+       
+      //  const companyEmploys =await contractDataInstance.viewCompanyemploys(key,reencrypt.publicKey, reencrypt.signature)
+      //  console.log("TX",companyEmploys);
+    }
+    catch(error){
+      console.log("Error",error)
+    }
   };
 
   return (
@@ -19,17 +67,17 @@ function ClickToViewContent() {
 
             <div className=" flex flex-col p-[16px] justify-between h-[120px] border-[#76787A] border-r w-[282.5px]">
               <h4 className="text-[16px] text-[#76787A] font-source-code-pro">Total Allocation</h4>
-              <h1 className="text-[24px] font-light font-source-code-pro">10,000,000</h1>
+              <h1 className="text-[24px] font-light font-source-code-pro">{allocations}</h1>
             </div>
 
             <div className=" flex flex-col p-[16px] justify-between h-[120px]  border-r w-[282.5px] border-[#76787A]">
               <h4 className="text-[16px] text-[#76787A] font-source-code-pro">Total Unlocked</h4>
-              <h1 className="text-[24px] font-light font-source-code-pro">10,000,000</h1>
+              <h1 className="text-[24px] font-light font-source-code-pro">{unlocked}</h1>
             </div>
 
             <div className=" flex flex-col  p-[16px] justify-between h-[120px]  w-[282.5px] border-[#76787A]">
               <h4 className="text-[16px] text-[#76787A] font-source-code-pro">No. of Employees </h4>
-              <h1 className="text-[24px] font-light font-source-code-pro">24</h1>
+              <h1 className="text-[24px] font-light font-source-code-pro">{employee}</h1>
             </div>
           </div>
         </div>

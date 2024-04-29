@@ -16,7 +16,7 @@ const SideBar = () => {
   };
 
   return (
-    <div className="w-[20%]   h-screen border border-[#E8E8E8] flex flex-col justify-between ">
+    <div className="w-full h-screen border border-[#E8E8E8] flex flex-col justify-between ">
       <div>
       <img className="m-5" src={logo} alt="" />
         <div className="flex flex-col">

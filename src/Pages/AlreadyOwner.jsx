@@ -1,21 +1,43 @@
 import React, { useEffect, useState } from "react";
 import logo_2 from "../assets/logo_2.png";
 import { useNavigate } from "react-router-dom";
+import { captableContract, getInstance } from "../utils/fhevm";
+import { getReencryptPublicKey } from "../utils/RencryptPublicKey";
 
-export default function AlreadyOwner({ companyKey }) {
-  console.log("CK", companyKey);
-  const [ck, setCk] = useState(companyKey);
 
-  const [copied, setCopied] = useState(false);
+
+
+const CAPTABLE_ADDRESS = "0x13D6c7652EaD49b377c9e7E5021D11FfaF032342";
+
+
+export default function AlreadyOwner() {
+ 
+  const [ck, setCk] = useState("");
+
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setCk(companyKey);
+  const handleClick = async(e) => {
+    e.preventDefault();
+    setCk(e.target.value);
+    console.log(ck)
+    try {
+      const instance = await getInstance();
+      const reencrypt = await getReencryptPublicKey(CAPTABLE_ADDRESS);
+      console.log(reencrypt);
+      console.log(await instance.hasKeypair(CAPTABLE_ADDRESS));
 
-    console.log(ck);
-  }, [companyKey]);
+      
+      const contractInstance = await captableContract();
 
-  const handleClick = () => {
+       const tx=await contractInstance.getcompany(ck)
+       const receipt = await tx.wait();
+       console.log("Transaction hash:", receipt);
+
+
+    } catch (error) {
+      console.log("error",error)
+    }
+    
     navigate("/allocations");
   };
 

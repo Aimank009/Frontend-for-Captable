@@ -1,6 +1,6 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import { init } from "./utils/fhevm";
+import { init } from "./utils/fhevm.jsx";
 
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";

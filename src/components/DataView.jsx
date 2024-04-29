@@ -1,7 +1,11 @@
 import React from 'react'
-import data from "../data/data.json"
+import data from "../DATA/data.json"
 
 export default function DataView() {
+
+
+
+  
   return (
     <>
         {data.map((i) => (

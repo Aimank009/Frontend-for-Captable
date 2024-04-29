@@ -6,9 +6,9 @@ import { getReencryptPublicKey } from "../utils/RencryptPublicKey.jsx";
 
 
 import { Buffer } from "buffer";
-import CompanyKey from "./CompanyKey";
+import CompanyKey from "./CompanyKey.jsx";
 window.Buffer=Buffer
-const CONTRACT_ADDRESS = "0xA4c5C4c33Bc4c55a0d73F3692311334546FEc78c";
+const CONTRACT_ADDRESS = "0x13D6c7652EaD49b377c9e7E5021D11FfaF032342";
 
 
 
@@ -63,8 +63,16 @@ export default function CreateCompanyKey() {
       }
 
     } catch (error) {
-      console.error("Error sending transaction:", error);
-      throw error;
+      console.error("Error sending transaction:", error.message);
+      if (
+        
+        error.data.message &&
+        error.data.message.includes("Internal JSON-RPC error")
+      ) {
+        navigate("/alreadyOwner");
+      } else {
+        throw error;
+      }
     }
   };
 
