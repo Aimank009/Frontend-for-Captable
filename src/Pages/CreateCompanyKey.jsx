@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import logo_2 from "../assets/logo_2.png";
-import { captableContract, getInstance } from "../utils/fhevm.jsx";
+import { captableContract, getInstance,CAPTABLE_ADDRESS} from "../utils/fhevm.jsx";
 import { getReencryptPublicKey } from "../utils/RencryptPublicKey.jsx";
 
 
 import { Buffer } from "buffer";
 import CompanyKey from "./CompanyKey.jsx";
 window.Buffer=Buffer
-const CONTRACT_ADDRESS = "0x13D6c7652EaD49b377c9e7E5021D11FfaF032342";
 
 
 
@@ -42,9 +41,9 @@ export default function CreateCompanyKey() {
     setGenerating(true)
     try {
       const instance = await getInstance();
-      const reencrypt = await getReencryptPublicKey(CONTRACT_ADDRESS);
+      const reencrypt = await getReencryptPublicKey(CAPTABLE_ADDRESS);
       console.log(reencrypt);
-      console.log(await instance.hasKeypair(CONTRACT_ADDRESS));
+      console.log(await instance.hasKeypair());
 
       // const encrypted = await instance.encrypt32(companyName,registrationYear);
       // console.log("Encrypted", encrypted);
@@ -76,20 +75,13 @@ export default function CreateCompanyKey() {
     }
   };
 
-  // useEffect(() => {
-  //   if (key.length > 0) {
-      
-  //     navigate(`/companyKey`);
-  //   }
-  // }, [key, navigate]);
-  
 
   return (
     <>
      {key.length>0&&<CompanyKey companyKey={key}/>}
       <div className="w-screen  h-screen flex flex-row items-center justify-between gap-[10%]">
-        <div className="border rounded-[20px] w-[40%] ml-[10%] sm:ml-20 h-[60%] border-[#E8E8E8]">
-          <form className="text-center mt-10">
+        <div className="border rounded-[20px] w-[35%] ml-[10%] sm:ml-20 h-[60%] border-[#E8E8E8]">
+          <form className=" mt-10">
             <div className="text-center mt-10">
               <h1 className="font-source-code-pro text-[30px] text-[#212427]">
                 Create Company Key
@@ -98,40 +90,41 @@ export default function CreateCompanyKey() {
                 Your company details are:
               </h1>
             </div>
-
-            <h1 className="font-medium font-source-code-pro mt-5 mb-2 text-sm text-[#212427] ">
+             <div className="flex flex-col items-center justify-center">
+            <h1 className="font-medium font-source-code-pro py-2 mb-2  text-[#212427] ">
               Company Name
             </h1>
+           
             <input
-              className="ml-5 w-[90%] h-[56px] font-source-code-pro focus:outline-[#3A74F2] border border-[#BDBDBD] rounded-xl px-2"
+              className="w-[85%] h-[56px] font-source-code-pro focus:outline-[#3A74F2] border border-[#BDBDBD] rounded-xl "
               type="text"
               value={companyName}
               readOnly
             />
-
-            <h1 className="font-medium font-source-code-pro text-[15px] mt-5 mb-2 text-[#212427]">
+            
+            <h1 className="font-medium font-source-code-pro  m-6 mb-2 text-[#212427]">
               Registration Year
             </h1>
             <input
-              className="ml-5 w-[90%] h-[56px] font-source-code-pro focus:outline-[#3A74F2] border border-[#BDBDBD] rounded-xl px-2"
+              className=" w-[85%] h-[56px] font-source-code-pro focus:outline-[#3A74F2] border border-[#BDBDBD] rounded-xl px-2"
               type="text"
               value={registrationYear}
               readOnly
             />
-
+          
             {generating ? (
-              <h1 className="ml-5 text-center w-[90%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px] mr-[10px] mt-[3.33%] text-[#FFFFFF]">
+              <h1 className=" text-center w-[85%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px]  mt-[3.33%] text-[#FFFFFF]">
                 Generating Company Key ...
               </h1>
-              
+                
             ) : (
               <button
                 onClick={handleGeneratekey}
-                className="ml-5 text-center w-[90%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px] mr-[10px] mt-[3.33%] text-[#FFFFFF]"
+                className=" text-center w-[85%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px]  mt-[4%] text-[#FFFFFF]"
               >
                 Generate Company Key
               </button>
-            )}
+            )}</div>
           </form>
           
         </div>

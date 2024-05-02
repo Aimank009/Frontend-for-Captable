@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideBar2 from "../Components/SideBar2.jsx";
 import { Connect } from "../Connect.jsx";
 import ClaimToken from "../Components/ClaimToken.jsx";
 import SteppedGraph from "../Components/MyChart.jsx";
+import { CAPTABLE_ADDRESS, CAPTABLE_DATA, captableContract, captableDataContract, getInstance } from "../utils/fhevm.jsx";
+import { getReencryptPublicKey } from "../utils/RencryptPublicKey.jsx";
+import Web3 from "web3";
+import captableAddress from "../JSON/CapTableData (4).json";
+import { useLocation } from "react-router-dom";
 
 export const claimed = {
   claim: "24",
@@ -10,6 +15,15 @@ export const claimed = {
 
 export default function Dashboard_emp() {
   const [open, setOpen] = useState(false);
+  const [totalAlloc,setTotalAlloc]=useState(0);
+  const [unlocked, setUnlocked] = useState(0);
+  const [locked,setLocked]=useState(0);
+  const [claimed,setClaimed]=useState(0);
+  const [companyKey, setCompanyKey] = useState("");
+  const [empName,setEmpName]=useState("")
+  const location = useLocation(); 
+
+  // const []
   const handleClose = () => {
     setOpen(false);
   };
@@ -20,6 +34,71 @@ export default function Dashboard_emp() {
     window.location.reload(); // Reload the page
   };
 
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const companykey = searchParams.get("companyKey");
+    if (companykey) {
+      setCompanyKey(companykey);
+    }
+  }, [location.search]);
+
+
+
+  const dataView=async()=>{
+    try {
+      const instance = await getInstance();
+      const reencrypt = await getReencryptPublicKey(CAPTABLE_DATA);
+      console.log(reencrypt);
+      console.log(await instance.hasKeypair(CAPTABLE_DATA));
+      const contractDataInstance = await captableDataContract();
+
+      const constactInstanceMain = await captableContract()
+ 
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+      console.log(accounts)
+      
+
+      console.log(companyKey);
+      
+      const web3 = new Web3("https://testnet.inco.org");
+      const contract = new web3.eth.Contract(captableAddress.abi,CAPTABLE_DATA );
+
+      const empname = await contract.methods.viewEmployeName(companyKey).call((error, result) => {
+        if (!error) {
+          console.log("Result", result);
+        } else {
+          console.log("Error", error);
+        }
+      })
+
+      console.log("empname",empname);
+
+      const employeeTotalAllocations = await contractDataInstance.viewEmployeTotalAllocation(companyKey, reencrypt.publicKey, reencrypt.signature,accounts[0])
+      console.log("TX", employeeTotalAllocations);
+      setTotalAlloc(parseInt(await instance.decrypt(CAPTABLE_DATA, employeeTotalAllocations)));
+
+      const employeeUnlocked = await contractDataInstance.viewEmployeUnlocked(companyKey, reencrypt.publicKey, reencrypt.signature,accounts[0])
+      console.log("TX", employeeUnlocked);
+      setUnlocked(parseInt(await instance.decrypt(CAPTABLE_DATA, employeeUnlocked)));
+
+      const employeeClaimed = await contractDataInstance.viewEmployeClaimed(companyKey, reencrypt.publicKey, reencrypt.signature,accounts[0])
+      console.log("TX", employeeClaimed);
+       setClaimed(parseInt(await instance.decrypt(CAPTABLE_DATA, employeeClaimed)));
+
+      setLocked(unlocked-claimed)
+
+
+
+
+
+    } catch (error) {
+      console.log("Error",error);
+    }
+  }
+  useEffect(() => {
+    dataView();
+  }, []);
   return (
     <>
       <div className="flex h-[100vh]">
@@ -32,7 +111,7 @@ export default function Dashboard_emp() {
           {/* Manish verma navbar */}
           <div>
             {/* {open && <div className="fixed inset-0 bg-black bg-opacity-50 z-10"></div>} */}
-            <div className=" flex justify-between items-center bg-white w-[100%] h-[10vh] border  border-gray-300  mr-[10px] ">
+            <div className=" flex justify-between items-center bg-white w-[100%] h-[10vh] border-t border-b  border-gray-300   ">
               <h1 className="ml-[20px] text-2xl font-source-code-pro font-normal">
                 Manish Verma
               </h1>
@@ -44,7 +123,7 @@ export default function Dashboard_emp() {
                 >
                   Claim Tokens
                 </button>
-                <button onClick={handleRefresh}  className="font-source-code-pro flex text-center text-[#3A74F2] w-[30%] mr-[5%] p-2 font-medium border rounded-lg border-[#3A74F2]">
+                <button onClick={handleRefresh}  className="font-source-code-pro flex text-center text-[#3A74F2] w-[30%] mr-[20px] p-2 font-medium border rounded-lg border-[#3A74F2]">
                   <svg
                     className="pl-1"
                     width="24"
@@ -68,25 +147,25 @@ export default function Dashboard_emp() {
           </div>
           <div>
             {/* allocations div */}
-            <div className="ml-[20px] flex mt-[20px] border-[#76787A] border-[1px] justify-between rounded-lg w-[full] h-[120px] mr-[10px] ">
+            <div className="ml-[20px] flex mt-[20px] border-[#76787A] border-[1px] justify-between rounded-lg w-[full] h-[120px] mr-[20px] ">
               <div className=" p-[16px] flex flex-col justify-between h-[120px]  border-r w-[282.5px] border-[#76787A]">
-                <h4 className=" text-[16px] text-[#76787A]">Company Key</h4>
-                <h1 className="text-[24px] font-[700]">#1L...X71</h1>
+                <h4 className=" text-[16px] text-[#76787A]  font-source-code-pro ">Allocated</h4>
+                <h1 className="text-[24px]  font-source-code-pro ">{totalAlloc}</h1>
               </div>
 
               <div className=" flex flex-col p-[16px] justify-between h-[120px] border-[#76787A] border-r w-[282.5px]">
-                <h4 className="text-[16px] text-[#76787A]">Total Allocation</h4>
-                <h1 className="text-[24px] font-[700]">10,000,000</h1>
+                <h4 className="text-[16px] text-[#76787A]  font-source-code-pro ">Unlocked</h4>
+                <h1 className="text-[24px]   font-source-code-pro ">{unlocked}</h1>
               </div>
 
               <div className=" flex flex-col p-[16px] justify-between h-[120px]  border-r w-[282.5px] border-[#76787A]">
-                <h4 className="text-[16px] text-[#76787A]">Total Unlocked</h4>
-                <h1 className="text-[24px] font-[700]">10,000,000</h1>
+                <h4 className="text-[16px] text-[#76787A]  font-source-code-pro ">Locked</h4>
+                <h1 className="text-[24px]   font-source-code-pro ">{locked}</h1>
               </div>
 
               <div className=" flex flex-col  p-[16px] justify-between h-[120px]  w-[282.5px] border-[#76787A]">
                 <h4 className="text-[16px] text-[#76787A]">Claimed </h4>
-                <h1 className="text-[24px] font-[700]">{claimed.claim}</h1>
+                <h1 className="text-[24px]  font-source-code-pro ">{claimed}</h1>
               </div>
             </div>
             <div className="mt-10 ml-[20px] mr-[10px]">

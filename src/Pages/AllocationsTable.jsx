@@ -17,14 +17,14 @@ const AllocationsTable = () => {
 
   return (
     <>
-      <div className="  flex items-center justify-between gap-4  w-[100%] h-[10vh]    border-b border-gray-300  ">
-        <div className="w-[15%] ml-[2.8%]">
+      <div className="  flex items-center justify-between    w-[100%] h-[10vh]    border-b border-gray-300  ">
+        <div className="w-[15%] mx-[2%]">
           <h1 className="  text-2xl font-semilight font-source-code-pro">
             Allocations
           </h1>
         </div>
 
-        <div className="flex gap-5 w-[50%] justify-end items-end ">
+        <div className="flex gap-5 w-[50%] mr-[20px]  justify-end items-end ">
           <button
             onClick={handleVestingClick}
             className="font-source-code-pro  text-center text-[#3A74F2] w-[30%] p-2 font-medium  border rounded-lg border-[#3A74F2]"
@@ -33,7 +33,7 @@ const AllocationsTable = () => {
           </button>
           <button
             onClick={handleRefresh}
-            className="font-source-code-pro font-medium flex items-center text-[#3A74F2] p-2  gap-2  border rounded-lg border-[#3A74F2] mr-[5%]"
+            className="font-source-code-pro font-medium flex items-center text-[#3A74F2] p-2  gap-2  border rounded-lg border-[#3A74F2] "
           >
             <svg
               className="p-1"

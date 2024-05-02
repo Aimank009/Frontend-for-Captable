@@ -5,7 +5,7 @@ import { claimed } from '../Pages/Dashboard_emp';
 
 
 
-const CAPTABLE_ADDRESS = "0x13D6c7652EaD49b377c9e7E5021D11FfaF032342";
+const CAPTABLE_ADDRESS = "0x325996bC4d37e5626059a1205dfa683353744002";
 const CAPTABLE_DATA="0xB116e476Ff26DFB937012575Ba9920012bA2Fad2";
 
 const ClaimToken = ({ onClose }) => {

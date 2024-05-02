@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import cvImage from "../assets/cvImage.png";
 import AddEmployee from "../Components/AddEmployee.jsx";
@@ -10,7 +10,40 @@ import DataView from "../Components/DataView.jsx";
 
 import { Connect } from "../Connect.jsx";
 import SideBar from "../Components/SideBar.jsx";
+import { CAPTABLE_DATA, captableContract, captableDataContract, getInstance } from "../utils/fhevm.jsx";
+import { getReencryptPublicKey } from "../utils/RencryptPublicKey.jsx";
 const Allocations = ({ children }) => {
+const [noEmploy,setNoEmploy]=useState(0);
+  const employNumber=async()=>{
+    try
+   {
+    const instance = await getInstance();
+      const reencrypt = await getReencryptPublicKey(CAPTABLE_DATA);
+      console.log(reencrypt);
+      console.log(await instance.hasKeypair(CAPTABLE_DATA));
+      const contractDataInstance = await captableDataContract();
+
+      const constactInstanceMain = await captableContract()
+
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+      console.log(accounts)
+      const key = await constactInstanceMain.adminKey(accounts[0]);
+      console.log(key)
+
+      const companyEmploys = await contractDataInstance.viewCompanyemploys(key, reencrypt.publicKey, reencrypt.signature)
+      console.log("TX", companyEmploys);
+      setNoEmploy(parseInt(await instance.decrypt(CAPTABLE_DATA, companyEmploys)));
+      console.log(noEmploy)
+  }
+  catch(error){
+    console.log("Error",error);
+  }
+}
+useEffect(() => {
+  employNumber();
+}, []);
+
     const [open, setOpen] = useState(false);
     const handleClose=()=>{
         setOpen(false);
@@ -30,7 +63,7 @@ const Allocations = ({ children }) => {
         </div>
         {open && <div className="fixed inset-0 bg-black bg-opacity-50 z-10"></div>}
         <AllocationsTable/>
-        {data.length>0 ? 
+        {noEmploy>0 ? 
           <div className="flex flex-col w-full">
             <SearchField/>
             <ActualDashboard/>

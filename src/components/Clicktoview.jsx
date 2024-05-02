@@ -1,88 +1,145 @@
 import React, { useState } from "react";
-import { captableContract, captableDataContract, getInstance } from "../utils/fhevm";
+import {
+  CAPTABLE_DATA,
+  captableContract,
+  captableDataContract,
+  getInstance,
+} from "../utils/fhevm";
 import { getReencryptPublicKey } from "../utils/RencryptPublicKey";
-
-
-const CAPTABLE_ADDRESS = "0x13D6c7652EaD49b377c9e7E5021D11FfaF032342";
-const CAPTABLE_DATA="0x765f69182281d43E1692629303C0456743F09369";
 
 function ClickToViewContent() {
   const [isVisible, setIsVisible] = useState(false);
-  const [allocations,setAllocations]=useState(0)
-  const [unlocked,setUnlocked]=useState(0)
-  const [employee,setEmployee]=useState(0)
-  const handleClick =async () => {
+  const [copied, setCopied] = useState(false);
+  const [allocations, setAllocations] = useState(0);
+  const [unlocked, setUnlocked] = useState(0);
+  const [companyKey, setCompanyKey] = useState("");
+  const [employee, setEmployee] = useState(0);
+  const handleClick = async () => {
     setIsVisible(true);
-    try{
+    try {
       const instance = await getInstance();
       const reencrypt = await getReencryptPublicKey(CAPTABLE_DATA);
       console.log(reencrypt);
       console.log(await instance.hasKeypair(CAPTABLE_DATA));
-      const contractInstance=await captableContract();
-
+      const contractInstance = await captableContract();
 
       const contractDataInstance = await captableDataContract();
 
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
-      const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-      console.log(accounts)
-      const key=await contractInstance.adminKey(accounts[0]);
-      console.log(key)
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+      const accounts = await window.ethereum.request({
+        method: "eth_accounts",
+      });
+      console.log(accounts);
+      const key = await contractInstance.adminKey(accounts[0]);
+      console.log(key);
+      setCompanyKey(key);
 
-       const companyEmploys =await contractDataInstance.viewCompanyemploys(key,reencrypt.publicKey, reencrypt.signature)
-       console.log("TX",companyEmploys);
-       const employee=await instance.decrypt(CAPTABLE_DATA,companyEmploys)
-       setEmployee(employee.toString())
-       console.log(employee);
+      const companyEmploys = await contractDataInstance.viewCompanyemploys(
+        key,
+        reencrypt.publicKey,
+        reencrypt.signature
+      );
+      console.log("TX", companyEmploys);
+      const employee = await instance.decrypt(CAPTABLE_DATA, companyEmploys);
+      setEmployee(employee.toString());
+      console.log(employee);
 
-       const companyTotalFunds =await contractDataInstance.viewCompanytotalFund(key,reencrypt.publicKey, reencrypt.signature)
-       console.log("TX",companyTotalFunds);
-       const alloc=await instance.decrypt(CAPTABLE_DATA,companyTotalFunds)
-       setAllocations(alloc.toString())
-       console.log(allocations);
+      const companyTotalFunds = await contractDataInstance.viewCompanytotalFund(
+        key,
+        reencrypt.publicKey,
+        reencrypt.signature
+      );
+      console.log("TX", companyTotalFunds);
+      const alloc = await instance.decrypt(CAPTABLE_DATA, companyTotalFunds);
+      setAllocations(alloc.toString());
+      console.log(allocations);
 
-       const companyTotalLocked =await contractDataInstance.viewCompanytotalLocked(key,reencrypt.publicKey, reencrypt.signature)
-       console.log("TX",companyTotalLocked);
-       const unlock=await instance.decrypt(CAPTABLE_DATA,companyTotalLocked)
-       setUnlocked(unlock.toString())
-       console.log(unlocked);
-       
-      //  const companyEmploys =await contractDataInstance.viewCompanyemploys(key,reencrypt.publicKey, reencrypt.signature)
-      //  console.log("TX",companyEmploys);
-    }
-    catch(error){
-      console.log("Error",error)
+      const companyTotalLocked =
+        await contractDataInstance.viewCompanytotalLocked(
+          key,
+          reencrypt.publicKey,
+          reencrypt.signature
+        );
+      console.log("TX", companyTotalLocked);
+      const unlock = await instance.decrypt(CAPTABLE_DATA, companyTotalLocked);
+      setUnlocked(unlock.toString());
+      console.log(unlocked);
+    } catch (error) {
+      console.log("Error", error);
     }
   };
-
+  const handleCopyCompanyKey = () => {
+    navigator.clipboard.writeText(companyKey);
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
+  };
   return (
     <>
       {isVisible == true ? (
         <div>
-          <div className="ml-[20px] flex mt-[20px] border-[#76787A] border-[1px] justify-between rounded-lg w-[full] h-[120px] mr-[10px] ">
+          <div className=" flex  border-[#76787A] border-[1px] justify-between rounded-lg w-[full] h-[120px]">
             <div className=" p-[16px] flex flex-col justify-between h-[120px]  border-r w-[282.5px] border-[#76787A]">
-              <h4 className=" text-[16px] text-[#76787A] font-source-code-pro">Company Key</h4>
-              <h1 className="text-[24px] font-source-code-pro font-light]">#1L...X71</h1>
+              <h4 className=" text-[16px] text-[#76787A] font-source-code-pro">
+                Company Key
+              </h4>
+              <div className="flex items-center">
+                <h1 className="text-[24px] font-source-code-pro font-light">
+                  {companyKey.substring(0, 10)}...
+                </h1>
+                <button onClick={handleCopyCompanyKey} className="ml-2">
+                  <svg
+                    width="18"
+                    height="21"
+                    className="cursor-pointer"
+                    viewBox="0 0 18 21"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12.75 15.75V19.125C12.75 19.746 12.246 20.25 11.625 20.25H1.875C1.57663 20.25 1.29048 20.1315 1.0795 19.9205C0.868527 19.7095 0.75 19.4234 0.75 19.125V6.375C0.75 5.754 1.254 5.25 1.875 5.25H3.75C4.25257 5.24966 4.7543 5.29114 5.25 5.374M12.75 15.75H16.125C16.746 15.75 17.25 15.246 17.25 14.625V9.75C17.25 5.29 14.007 1.589 9.75 0.874002C9.2543 0.791137 8.75257 0.74966 8.25 0.750002H6.375C5.754 0.750002 5.25 1.254 5.25 1.875V5.374M12.75 15.75H6.375C6.07663 15.75 5.79048 15.6315 5.5795 15.4205C5.36853 15.2095 5.25 14.9234 5.25 14.625V5.374M17.25 12V10.125C17.25 9.2299 16.8944 8.37145 16.2615 7.73852C15.6286 7.10558 14.7701 6.75 13.875 6.75H12.375C12.0766 6.75 11.7905 6.63148 11.5795 6.4205C11.3685 6.20952 11.25 5.92337 11.25 5.625V4.125C11.25 3.68179 11.1627 3.24292 10.9931 2.83345C10.8235 2.42397 10.5749 2.05191 10.2615 1.73852C9.94809 1.42512 9.57603 1.17652 9.16656 1.00691C8.75708 0.837299 8.31821 0.750002 7.875 0.750002H6.75"
+                      stroke="#212427"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  {copied && <p className="text-[#76787A]">Copied</p>}
+                </button>
+              </div>{" "}
             </div>
 
             <div className=" flex flex-col p-[16px] justify-between h-[120px] border-[#76787A] border-r w-[282.5px]">
-              <h4 className="text-[16px] text-[#76787A] font-source-code-pro">Total Allocation</h4>
-              <h1 className="text-[24px] font-light font-source-code-pro">{allocations}</h1>
+              <h4 className="text-[16px] text-[#76787A] font-source-code-pro">
+                Total Allocation
+              </h4>
+              <h1 className="text-[24px] font-light font-source-code-pro">
+                {allocations}
+              </h1>
             </div>
 
             <div className=" flex flex-col p-[16px] justify-between h-[120px]  border-r w-[282.5px] border-[#76787A]">
-              <h4 className="text-[16px] text-[#76787A] font-source-code-pro">Total Unlocked</h4>
-              <h1 className="text-[24px] font-light font-source-code-pro">{unlocked}</h1>
+              <h4 className="text-[16px] text-[#76787A] font-source-code-pro">
+                Total Unlocked
+              </h4>
+              <h1 className="text-[24px] font-light font-source-code-pro">
+                {unlocked}
+              </h1>
             </div>
 
             <div className=" flex flex-col  p-[16px] justify-between h-[120px]  w-[282.5px] border-[#76787A]">
-              <h4 className="text-[16px] text-[#76787A] font-source-code-pro">No. of Employees </h4>
-              <h1 className="text-[24px] font-light font-source-code-pro">{employee}</h1>
+              <h4 className="text-[16px] text-[#76787A] font-source-code-pro">
+                No. of Employees{" "}
+              </h4>
+              <h1 className="text-[24px] font-light font-source-code-pro">
+                {employee}
+              </h1>
             </div>
           </div>
         </div>
       ) : (
-        <div className="ml-[20px] flex items-center justify-center mt-[20px] bg-[#f4f4f4]  rounded-lg w-[full] h-[120px] mr-[10px] ">
+        <div className="mx-[20px] flex items-center justify-center mt-[20px] bg-[#f4f4f4]  rounded-lg w-[full] h-[120px]  ">
           <button
             onClick={handleClick}
             className=" font-source-code-pro flex justify-center items-center w-[20%] text-right text-white h-[40%] bg-[#3A74F2] rounded-[12px]"

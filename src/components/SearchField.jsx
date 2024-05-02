@@ -10,9 +10,9 @@ const SearchField = () => {
       setOpen(true);
     };
   return (
-    <div>
-                    <div className="ml-[12px] flex mt-[5px] justify-between  border-white border-[1px]  items-center rounded-lg w-[full] h-[80px]  ">
-                        <div>
+    <div className='border-b'>
+                    <div className=" mx-[10px] flex mt-[5px] justify-between  items-center  w-[full] h-[80px]  ">
+                        <div className=''>
                         <form action="POST" >
                             <label htmlFor="search" className="relative">
                                 <input
@@ -36,15 +36,15 @@ const SearchField = () => {
 
                         </form>
                         </div>
-                        <div className='flex gap-2'>
-                            <button onClick={handleClick} className='w-[161px] font-medium text-[#3A74F2]  h-[40px] border rounded-[12px] border-[#3A74F2] '>
+                        <div className='flex gap-5'>
+                            <button onClick={handleClick} className='w-[161px] font-medium text-[#3A74F2]  h-[40px] border rounded-[12px] border-[#3A74F2] font-source-code-pro '>
                                 Add Employee
                             </button>
                             {open && <AddEmployee onClose={handleClose} />}
-                            <button className=" w-[161px] font-medium text-[#3A74F2] justify-center h-[40px] border rounded-[12px] border-[#3A74F2] flex gap-2 items-center mr-[10px]">
+                            <button className=" w-[161px] font-medium font-source-code-pro text-[#3A74F2] justify-center h-[40px] border rounded-[12px] border-[#3A74F2] flex gap-2 items-center mr-[10px]">
                                 <svg
-                                    width="16"
-                                    height="16"
+                                    width="14"
+                                    height="14"
                                     viewBox="0 0 16 16"
                                     fill="none"
                                     xmlns="http://www.w3.org/2000/svg"

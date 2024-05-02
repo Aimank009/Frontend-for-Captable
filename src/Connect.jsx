@@ -152,10 +152,12 @@ export const Connect = ({ children }) => {
         {connected && (
           <div className="Connect__account ">
             <div className="flex items-center">
-              <div className="flex flex-col p-2">
-                <h1 className="text-[#BDBDBD]">Linked Wallet</h1>
-                {/* {`${account}`.substr(0, 10) + "..."} */}
-                {showFullAddress ? `${account}` : `${account}`.substr(0, 10) + '...'}
+              <div className="flex flex-col p-2 ">
+                <h1 className="text-[#BDBDBD] font-source-code-pro">Linked Wallet</h1>
+                <div className="font-source-code-pro text-[#3F3F41] font-semibold">
+                {showFullAddress ? `${account}` : `${account}`.slice(0,5) + '...'+`${account}`.slice(-5)}
+                </div>
+                
               </div>
               <svg
               onClick={toggleShowFullAddress}
@@ -164,7 +166,7 @@ export const Connect = ({ children }) => {
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className=" ml-[1%] mb-[1%] cursor-pointer"
+                className="mt-[22px] cursor-pointer mr-[15px]"
               >
                 <path
                   d="M15.88 9.29L12 13.17L8.11998 9.29C7.72998 8.9 7.09998 8.9 6.70998 9.29C6.31998 9.68 6.31998 10.31 6.70998 10.7L11.3 15.29C11.69 15.68 12.32 15.68 12.71 15.29L17.3 10.7C17.69 10.31 17.69 9.68 17.3 9.29C16.91 8.91 16.27 8.9 15.88 9.29Z"

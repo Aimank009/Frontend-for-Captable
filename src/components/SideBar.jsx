@@ -16,13 +16,13 @@ const SideBar = () => {
   };
 
   return (
-    <div className="w-full h-screen border border-[#E8E8E8] flex flex-col justify-between ">
+    <div className="w-full h-screen border  border-[#E8E8E8] flex flex-col justify-between ">
       <div>
       <img className="m-5" src={logo} alt="" />
         <div className="flex flex-col">
-        <h1 className="-mb-[25%] mt-[30%] ml-5">Menu</h1>
+        <h1 className="-mb-[25%] mt-[30%] font-source-code-pro ml-5">Menu</h1>
         <h1
-          className={`text-[#212427] items-center rounded-xl p-2 mx-[10%] mt-20 flex gap-[10px] hover:bg-[#F4F4F4] ${
+          className={`text-[#212427] font-source-code-pro items-center rounded-xl p-2 mx-[10%] mt-20 flex gap-[10px] hover:bg-[#F4F4F4] ${
             isHeadingActive("Allocations") ? "bg-[#F4F4F4]" : "bg-white"
           }`}
           onClick={() => handleClick("Allocations")}
@@ -55,7 +55,7 @@ const SideBar = () => {
           Allocations
         </h1>
         <h1
-          className={`text-[#212427] mx-[10%] items-center rounded-lg p-2 m-2 flex gap-[10px] hover:bg-[#F4F4F4] ${
+          className={`text-[#212427] font-source-code-pro mx-[10%] items-center rounded-lg p-2 m-2 flex gap-[10px] hover:bg-[#F4F4F4] ${
             isHeadingActive("Transaction") ? "bg-[#F4F4F4]" : "bg-white"
           }`}
           onClick={() => handleClick("Transaction")}
@@ -87,9 +87,9 @@ const SideBar = () => {
             className="w-[114px]  h-[64px] -ml-7"
             alt=""
           />
-          <div className="flex flex-col">
-            <h1 className="text-4xl -ml-5">Bit</h1>
-            <h1 className=" -ml-5 text-[#76787A]">1 company</h1>
+          <div className="flex mt-1  flex-col">
+            <h1 className="text-4xl -ml-5 font-source-code-pro">Bit</h1>
+            <h1 className=" -ml-6 text-[#76787A] font-source-code-pro">1company</h1>
           </div>
           <div className="m-6">
             <svg

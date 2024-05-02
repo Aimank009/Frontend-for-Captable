@@ -10,10 +10,11 @@ const LandingPage = () => {
     const handleEmploy=()=>{
       navigate('/employeeLogin')
     }
+
   return (
     <div className="z-50 mt-[1%]">
       <div className="flex items-center justify-between">
-      <img className="p-3" src={logo} alt="" />
+      <img onClick={()=>navigate('/')} className="p-3 cursor-pointer" src={logo} alt="" />
       <div className="flex items-end justify-end">
       <Connect>{(account, provider) => null}</Connect> 
       </div>

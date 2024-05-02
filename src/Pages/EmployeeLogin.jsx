@@ -1,22 +1,44 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import logo_2 from "../assets/logo_2.png";
 import { useNavigate } from "react-router-dom";
+import {
+  captableContract,
+  getInstance,
+} from "../utils/fhevm";
 
-export default function EmployeeLogin({ companyKey }) {
-  console.log("CK", companyKey);
-  const [ck, setCk] = useState(companyKey);
-
-  const [copied, setCopied] = useState(false);
+export default function EmployeeLogin() {
+  const [companyKey, setCompanyKey] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setCk(companyKey);
+  const handleCompanyKeyChange = (event) => {
+    setCompanyKey(event.target.value); // Update state with input value
+  };
 
-    console.log(ck);
-  }, [companyKey]);
+  const handleClick = async () => {
+    try {
+      const constactInstanceMain = await captableContract();
 
-  const handleClick = () => {
-    navigate("/dashboard");
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      const userAddress = accounts[0];
+
+      console.log(companyKey);
+      console.log(userAddress);
+
+      const isEmployee = await constactInstanceMain.isEmpoloyee(
+        companyKey,
+        userAddress
+      );
+      console.log("EMp", isEmployee);
+      if (isEmployee) {
+        navigate(`/dashboard?companyKey=${companyKey}`);
+      } else {
+        alert("Wrong Data")
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   return (
@@ -40,6 +62,8 @@ export default function EmployeeLogin({ companyKey }) {
         <div className="flex ">
           <input
             text=""
+            value={companyKey}
+            onChange={handleCompanyKeyChange}
             className="ml-[4%] w-[87%] h-[56px] flex items-center  font-source-code-pro focus:outline-[#3A74F2] border border-[#BDBDBD] text-[#BDBDBD] rounded-xl px-2 focus:outline-none "
             placeholder=" Enter Company Key"
           />

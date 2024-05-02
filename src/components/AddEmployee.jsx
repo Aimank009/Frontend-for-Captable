@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { captableContract, getInstance } from "../utils/fhevm";
+import { CAPTABLE_ADDRESS, captableContract, getInstance } from "../utils/fhevm";
 import { getReencryptPublicKey } from "../utils/RencryptPublicKey";
 
 
 import { Buffer } from "buffer";
-import Web3 from "web3";
+
 window.Buffer = Buffer;
 
-const CAPTABLE_ADDRESS = "0x13D6c7652EaD49b377c9e7E5021D11FfaF032342";
+
 const AddEmployee = ({ onClose }) => {
-  const [walletAddress, setWalletAddress] = useState("");
+
   const [formData, setFormData] = useState({
     name: "",
     walletAddress: "",
@@ -42,27 +42,15 @@ const AddEmployee = ({ onClose }) => {
       const key=await contractInstance.adminKey(accounts[0]);
       console.log(key)
 
-      if (window.ethereum) {
-        // Connect to MetaMask
-        const web3 = new Web3(window.ethereum);
-        
-        // Request account access if needed
-        await window.ethereum.request({ method: 'eth_requestAccounts' }).then(() => {
-          // Get the current accounts
-          web3.eth.getAccounts().then((accounts) => {
-            // Set the first account as the wallet address
-            setWalletAddress(accounts[0]);
-          });
-        });
-      }
-      console.log(walletAddress)
-      const tx = await contractInstance.addEmploy(walletAddress,key);
+     
+
+      const tx = await contractInstance.addEmploy(formData.name,formData.walletAddress,key);
       const receipt = await tx.wait();
       console.log("Transaction hash:", receipt);
 
       const cipher=await instance.encrypt32(+amount)
       console.log("cipher",cipher)
-      const alloc=await contractInstance.addAllocation(walletAddress,cipher,key);
+      const alloc=await contractInstance.addAllocation(formData.walletAddress,cipher,key);
       const alocreci = await alloc.wait();
       console.log("Alloc",alocreci);
       
@@ -133,7 +121,7 @@ console.log("Error",error)
               <div className="flex relative justify-between items-center border border-[#BDBDBD] w-[80%] rounded-lg">
                 <input
                   type="text"
-                  className="rounded-lg font-source-code-pro h-[6vh] focus:outline-none p-2 "
+                  className="rounded-lg font-source-code-pro h-[6vh] w-[100%] focus:outline-none p-2 "
                   placeholder="Allocate Tokens"
                   name="amount"
                   value={formData.amount}

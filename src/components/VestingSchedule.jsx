@@ -3,9 +3,8 @@ import { captableContract, captableDataContract, getInstance, vestingContract } 
 import { getReencryptPublicKey } from "../utils/RencryptPublicKey";
 import moment from "moment"
 import { Buffer } from "buffer";
-const CAPTABLE_ADDRESS = "0x13D6c7652EaD49b377c9e7E5021D11FfaF032342";
-const CAPTABLE_DATA="0x765f69182281d43E1692629303C0456743F09369";
-const VESTING_ADDRESS="0xc803d26f2199d8DE7545b32976ad4763b47B692c"
+
+const CAPTABLE_DATA="0x6b6845a3DA474079CA531F7c3FEa1678e9C064CD";
 
 const VestingSchedule = ({ onClose }) => {
   const [scheduleData, setScheduleData] = useState({
