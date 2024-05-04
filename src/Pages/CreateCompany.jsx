@@ -24,14 +24,14 @@ const handleClick=()=>{
 }
   return (
     <>
-      <div className="w-screen sm:w-full h-screen flex flex-col lg:flex-row items-center  justify-between">
-        <div className="border rounded-[30px] w-[35%] mx-[10%] sm:ml-20 h-[60%] border-[#E8E8E8]">
-          <form onSubmit={handleSubmit} className="  mt-10">
-            <div className=" text-center mt-10">
+      <div className="w-full h-screen flex flex-row  items-center  justify-between">
+        <div className="border rounded-[30px] w-[35%] mx-[10%] h-[450px] relative border-[#E8E8E8]">
+          <form onSubmit={handleSubmit} className="">
+            <div className=" text-center pt-5">
               <h1 className="font-source-code-pro text-[30px] text-[#212427]">
                 Create Company
               </h1>
-              <h1 className="text-[#5B5B5D] mt-[2%] text-center font-source-code-pro">
+              <h1 className="text-[#5B5B5D] pt-[2%] text-center font-source-code-pro">
                 Please enter your company name and
               </h1>
               <h1 className="text-[#5B5B5D] text-center font-source-code-pro">
@@ -39,7 +39,7 @@ const handleClick=()=>{
               </h1>
             </div>
 
-            <h1 className="font-medium m-9 font-source-code-pro text-sm  mb-2  text-[#212427] ">
+            <h1 className="font-medium ml-9 p-1 font-source-code-pro text-sm    text-[#212427] ">
               Company Name
             </h1>
             <input
@@ -93,7 +93,7 @@ const handleClick=()=>{
               </h1>
             </div>
 
-            <h1 onClick={handleClick} className=" font-source-code-pro mt-[30%] pl-10 pb-10 text-[#FFFFFF] text-[100%] flex gap-2 items-center hover:underline cursor-pointer">
+            <h1 onClick={handleClick} className=" font-source-code-pro mt-[20%] pl-10 pb-10 text-[#FFFFFF] text-[100%] flex gap-2 items-center hover:underline cursor-pointer">
               Already have a Company
               <svg
                 width="15"

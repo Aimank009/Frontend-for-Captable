@@ -30,8 +30,8 @@ export default function CompanyKey() {
   };
 
   return (
-    <div className="w-screen sm:w-full h-screen flex flex-col lg:flex-row items-center justify-between">
-      <div className="border rounded-[20px] w-[90%] sm:w-[30%] ml-4 sm:ml-20 h-[42%] border-[#E8E8E8]">
+    <div className="w-screen h-screen flex flex-row  items-center justify-between">
+      <div className="border rounded-[20px] w-[35%]  ml-20  h-[400px] border-[#E8E8E8]">
         <div className="text-center">
           <h1 className="font-source-code-pro text-3xl mt-[10%] text-[#212427]">
             Company Created
@@ -41,7 +41,7 @@ export default function CompanyKey() {
           </h1>
         </div>
 
-        <h1 className="font-medium font-source-code-pro ml-5 mt-5 mb-2 text-sm text-[#212427]">
+        <h1 className="font-medium font-source-code-pro ml-8 mt-5 mb-2 text-sm text-[#212427]">
           Company key
         </h1>
         <div className="pb-5 flex items-center  justify-center gap-4">
@@ -49,7 +49,7 @@ export default function CompanyKey() {
           value={companyKey && companyKey.length > 0
             ? companyKey.substring(0,28)+"..."
             : "#1Lbcfr7zzcczzczczcsAH..........ZnX71"}
-           className="ml-5 w-[75%] h-[56px] font-source-code-pro focus:outline-[#3A74F2] border border-[#BDBDBD] text-black rounded-xl px-2"/>
+           className=" w-[75%] h-[56px] font-source-code-pro focus:outline-[#3A74F2] border border-[#BDBDBD] text-black rounded-xl px-2"/>
             
          
 
@@ -74,7 +74,7 @@ export default function CompanyKey() {
         </div>
         <h1
           onClick={handleClick}
-          className="ml-5  text-center w-[88%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px] mr-[10px] mt-[3.33%] text-[#FFFFFF]"
+          className="ml-8  text-center w-[88%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px] mr-[10px] mt-[3.33%] text-[#FFFFFF]"
         >
           Go to Dashboard
         </h1>

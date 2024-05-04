@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import AddEmployee from './AddEmployee';
+import AddEmployee from './AddEmployee.jsx';
 
 const SearchField = () => {
     const [open, setOpen] = useState(false);

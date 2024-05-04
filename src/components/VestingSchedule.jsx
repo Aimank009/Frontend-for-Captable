@@ -7,7 +7,7 @@ import {
   getInstance,
   vestingContract,
 } from "../utils/fhevm";
-
+import { getReencryptPublicKey } from "../utils/RencryptPublicKey";
 import moment from "moment";
 import vestingabi from "../JSON/Vesting (3).json";
 import Web3 from "web3";
@@ -128,7 +128,7 @@ const VestingSchedule = ({ onClose }) => {
         <form onSubmit={handleSubmit}>
           <div className="m-5 flex flex-col gap-10 w-[85%] h-[60%] ">
             <div className="flex space-x-[90px] mt-10 ">
-              <div className="">
+              <div className="w-[44%]">
                 <h1 className="font-source-code-pro text-sm text-[#212427]">
                   Start date
                 </h1>
@@ -156,13 +156,13 @@ const VestingSchedule = ({ onClose }) => {
               </div>
             </div>
 
-            <div className="flex justify-between mt-5 gap-5">
-              <div className="">
+            <div className="flex  space-x-[85px]">
+              <div className="w-[44%]">
                 <h1 className="font-source-code-pro text-sm text-[#212427]">
                   Start Percentage
                 </h1>
                 <input
-                  className="font-source-code-pro w-[94%] p-2 focus:outline-none border border-[#BDBDBD] rounded-lg "
+                  className="font-source-code-pro w-[100%] p-2 focus:outline-none border border-[#BDBDBD] rounded-lg "
                   type="text"
                   name="startPercentage"
                   value={scheduleData.startPercentage}
@@ -170,12 +170,12 @@ const VestingSchedule = ({ onClose }) => {
                   placeholder="Enter %"
                 />
               </div>
-              <div className="">
-                <h1 className="font-source-code-pro ml-2   text-sm text-[#212427]">
+              <div className="w-[44%]">
+                <h1 className="font-source-code-pro    text-sm text-[#212427]">
                   Linear Percentage 
                 </h1>
                 <input
-                  className="font-source-code-pro w-[98s%] ml-[3%] p-2 focus:outline-none border border-[#BDBDBD] rounded-lg "
+                  className="font-source-code-pro w-[100%]  p-2 focus:outline-none border border-[#BDBDBD] rounded-lg "
                   type="text"
                   name="linearPercentageAfterCliff"
                   value={scheduleData.linearPercentageAfterCliff}
@@ -185,12 +185,12 @@ const VestingSchedule = ({ onClose }) => {
               </div>
             </div>
 
-            <div className="flex space-x-[62px] mt-10">
-              <div>
+            <div className="flex space-x-[85px] ">
+              <div className="w-[42%]">
                 <h1 className="font-source-code-pro text-sm text-[#212427]">
                   Cliff
                 </h1>
-                <div className="flex items-center justify-between pr-2  w-[88%] focus:outline-none border border-[#BDBDBD] rounded-lg ">
+                <div className="flex items-center justify-between pr-2  w-[100%] focus:outline-none border border-[#BDBDBD] rounded-lg ">
                   <input
                     className="font-source-code-pro  rounded-l-lg  w-[100%] focus:outline-none p-2 "
                     type="text"

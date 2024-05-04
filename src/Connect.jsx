@@ -143,7 +143,7 @@ export const Connect = ({ children }) => {
       <div className="flex items-center justify-end  -mt-[1%] py-[1%]">
         {!connected && (
           <button
-            className="Connect__button font-source-code-pro cursor-pointer rounded-lg w-[200px] h-[40px] mt-[2px] bg-[#3A74F2] px-[24px]   mr-[2.5%]  text-[#FFFFFF]  "
+            className="Connect__button font-source-code-pro cursor-pointer rounded-lg w-[200px] h-[40px] mt-[2px] bg-[#3A74F2] px-[24px]   mr-[20px]  text-[#FFFFFF]  "
             onClick={connect}
           >
             Connect wallet

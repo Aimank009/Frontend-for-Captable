@@ -4,7 +4,7 @@ import { CAPTABLE_ADDRESS, CAPTABLE_DATA, captableContrac, captableContract, cap
 import { getReencryptPublicKey } from '../utils/RencryptPublicKey';
 import Web3 from "web3";
 import captableAddress from "../JSON/EncryptedCapTable (7).json";
-import Loader from './Loader';
+import Loader from './Loader.jsx';
 
 export default function DataView() {
 
@@ -107,7 +107,7 @@ export default function DataView() {
           <h1 className={`text-[14px] font-source-code-pro text-[#3F3F41] ${employee.address>0 ? '' : 'text-[#3A74F2] '}`}>{employee.address.slice(0,5)+'...'+employee.address.slice(-5) || 'Add Wallet'}</h1>
           </div>
           <div className='w-[280px]  flex items-center justify-center h-[100px] px-6 py-6'>
-          <h1 className={`text-[14px] font-source-code-pro text-[#3F3F41] ${parseInt(employee.unlocked) < parseInt(employee.totalAllocation) ? 'text-[#C88913] bg-[#FDF2E0] text-[13px] p-2 rounded-full' : 'text-[#4A9C52] bg-[#F0F8F0] text-[13px] px-4 py-2 rounded-full'}`}>{parseInt(employee.unlocked) < parseInt(employee.totalAllocation) ? 'Claim Available' : 'Up To Date'}</h1>
+          <h1 className={`text-[14px] font-source-code-pro text-[#3F3F41] ${parseInt(employee.unlocked) < parseInt(employee.totalAllocation) ? 'text-[#C88913] bg-[#FDF2E0] text-[11px] p-2 rounded-full' : 'text-[#4A9C52] bg-[#F0F8F0] text-[13px] px-4 py-2 rounded-full'}`}>{parseInt(employee.unlocked) < parseInt(employee.totalAllocation) ? 'Claim Available' : 'Up To Date'}</h1>
           </div>
         </div>
       ))}
