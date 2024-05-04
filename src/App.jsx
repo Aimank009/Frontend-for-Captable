@@ -12,7 +12,6 @@ import Allocations from "./Pages/Allocations.jsx";
 import AlreadyOwner from "./Pages/AlreadyOwner.jsx";
 import Dashboard_emp from "./Pages/Dashboard_emp.jsx";
 import EmployeeLogin from "./Pages/EmployeeLogin.jsx";
-import VestingSchedule2 from "./Components/vestingPage2.jsx";
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(true);
@@ -39,7 +38,7 @@ function App() {
           <Route exact path="/alreadyOwner" element={<AlreadyOwner />} />
           <Route exact path="/dashboard" element={<Dashboard_emp />} />
           <Route exact path="/employeeLogin" element={<EmployeeLogin/>} />
-          <Route exact path="/addvestingpercentages" element={<VestingSchedule2/>} />
+         
         </Routes>
       </Router>
     </>

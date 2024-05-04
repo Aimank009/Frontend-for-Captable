@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { captableContract, getInstance } from '../utils/fhevm';
 import { getReencryptPublicKey } from '../utils/RencryptPublicKey';
-import { claimed } from '../Pages/Dashboard_emp';
+
 
 
 

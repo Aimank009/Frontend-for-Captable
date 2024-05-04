@@ -3,7 +3,6 @@ import logo_2 from "../assets/logo_2.png";
 import { useNavigate } from "react-router-dom";
 import {
   captableContract,
-  getInstance,
 } from "../utils/fhevm";
 
 export default function EmployeeLogin() {

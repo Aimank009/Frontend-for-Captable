@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import data from "../DATA/data.json"
+
 import { CAPTABLE_ADDRESS, CAPTABLE_DATA, captableContrac, captableContract, captableDataContract, getInstance } from '../utils/fhevm';
 import { getReencryptPublicKey } from '../utils/RencryptPublicKey';
 import Web3 from "web3";

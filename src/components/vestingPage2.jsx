@@ -7,7 +7,6 @@ import {
 } from "../utils/fhevm";
 import { getReencryptPublicKey } from "../utils/RencryptPublicKey";
 import moment from "moment";
-import { Buffer } from "buffer";
 
 const CAPTABLE_DATA = "0x6b6845a3DA474079CA531F7c3FEa1678e9C064CD";
 

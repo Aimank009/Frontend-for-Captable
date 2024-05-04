@@ -3,10 +3,8 @@ import SideBar2 from "../Components/SideBar2.jsx";
 import { Connect } from "../Connect.jsx";
 import ClaimToken from "../Components/ClaimToken.jsx";
 import SteppedGraph from "../Components/MyChart.jsx";
-import { CAPTABLE_ADDRESS, CAPTABLE_DATA, captableContract, captableDataContract, getInstance } from "../utils/fhevm.jsx";
+import { CAPTABLE_DATA, captableContract, captableDataContract, getInstance } from "../utils/fhevm.jsx";
 import { getReencryptPublicKey } from "../utils/RencryptPublicKey.jsx";
-import Web3 from "web3";
-import captableAddress from "../JSON/CapTableData (5).json";
 import { useLocation } from "react-router-dom";
 
 export const claimed = {

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import cvImage from "../assets/cvImage.png";
 import AddEmployee from "../Components/AddEmployee.jsx";
 import AllocationsTable from "./AllocationsTable.jsx";
-import data from "../DATA/data.json"
+
 import SearchField from "../Components/SearchField.jsx";
 import ActualDashboard from "../Components/ActualDashboard.jsx";
 import DataView from "../Components/DataView.jsx";
