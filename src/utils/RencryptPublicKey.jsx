@@ -2,7 +2,6 @@ import { getInstance } from "./fhevm.jsx";
 
 export const getReencryptPublicKey = async (contractAddress) => {
   const instance = await getInstance();
-  console.log((await instance).hasKeypair);
   if (!(await instance).hasKeypair(contractAddress)) {
     const eip712Domain = {
       // Give a user-friendly name to the specific contract you're signing for.
@@ -19,7 +18,7 @@ export const getReencryptPublicKey = async (contractAddress) => {
     const accounts = await window.ethereum.request({
       method: "eth_requestAccounts",
     });
-    console.log("useraddress", accounts[0]);
+  
     const userAddress = accounts[0];
 
     const reencryption = (await instance).generatePublicKey(eip712Domain);
@@ -32,7 +31,6 @@ export const getReencryptPublicKey = async (contractAddress) => {
 
     (await instance).setSignature(contractAddress, sig);
   }
-  console.log((await instance).hasKeypair(contractAddress));
-  // console.log(await instance).getPublicKey(contractAddress);
+  
   return (await instance).getPublicKey(contractAddress);
 };

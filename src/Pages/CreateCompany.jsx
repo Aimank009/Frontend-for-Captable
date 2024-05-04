@@ -25,7 +25,7 @@ const handleClick=()=>{
   return (
     <>
       <div className="w-screen sm:w-full h-screen flex flex-col lg:flex-row items-center  justify-between">
-        <div className="border rounded-[20px] w-[35%] mx-[10%] sm:ml-20 h-[60%] border-[#E8E8E8]">
+        <div className="border rounded-[30px] w-[35%] mx-[10%] sm:ml-20 h-[60%] border-[#E8E8E8]">
           <form onSubmit={handleSubmit} className="  mt-10">
             <div className=" text-center mt-10">
               <h1 className="font-source-code-pro text-[30px] text-[#212427]">

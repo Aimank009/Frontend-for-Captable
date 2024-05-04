@@ -8,6 +8,7 @@ import {
 
 export default function EmployeeLogin() {
   const [companyKey, setCompanyKey] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleCompanyKeyChange = (event) => {
@@ -34,7 +35,7 @@ export default function EmployeeLogin() {
       if (isEmployee) {
         navigate(`/dashboard?companyKey=${companyKey}`);
       } else {
-        alert("Wrong Data")
+        setError("Your are not a member of this company");
       }
     } catch (error) {
       console.log("error", error);
@@ -64,11 +65,15 @@ export default function EmployeeLogin() {
             text=""
             value={companyKey}
             onChange={handleCompanyKeyChange}
-            className="ml-[4%] w-[87%] h-[56px] flex items-center  font-source-code-pro focus:outline-[#3A74F2] border border-[#BDBDBD] text-[#BDBDBD] rounded-xl px-2 focus:outline-none "
+            className={`ml-[4%] w-[87%] h-[56px] flex items-center  font-source-code-pro focus:outline-[#3A74F2] border ${
+              error ? "border-[#DE3333] text-[#DE3333]" : "border-[#BDBDBD]"
+            } text-[#BDBDBD] rounded-xl px-2 focus:outline-none`}
             placeholder=" Enter Company Key"
           />
         </div>
-
+        {error && ( // Render error message if there is an error
+          <p className="text-red-500 text-sm ml-7 mt-1">{error}</p>
+        )}
         <h1
           onClick={handleClick}
           className="ml-5  text-center w-[88%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px] mr-[10px] mt-[5%] text-[#FFFFFF]"

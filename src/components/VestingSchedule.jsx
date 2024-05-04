@@ -1,10 +1,16 @@
 import React, { useState } from "react";
-import { captableContract, captableDataContract, getInstance, vestingContract } from "../utils/fhevm";
+import {
+  CAPTABLE_DATA,
+  VESTING_ADDRESS,
+  captableContract,
+  captableDataContract,
+  getInstance,
+  vestingContract,
+} from "../utils/fhevm";
 import { getReencryptPublicKey } from "../utils/RencryptPublicKey";
-import moment from "moment"
-import { Buffer } from "buffer";
-
-const CAPTABLE_DATA="0x6b6845a3DA474079CA531F7c3FEa1678e9C064CD";
+import moment from "moment";
+import vestingabi from "../JSON/Vesting (3).json";
+import Web3 from "web3";
 
 const VestingSchedule = ({ onClose }) => {
   const [scheduleData, setScheduleData] = useState({
@@ -13,7 +19,7 @@ const VestingSchedule = ({ onClose }) => {
     startPercentage: "",
     linearPercentageAfterCliff: "",
     cliff: "",
-    cliffPercentage:"",
+    cliffPercentage: "",
   });
 
   const handleChange = (e) => {
@@ -24,105 +30,73 @@ const VestingSchedule = ({ onClose }) => {
     });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const startdate = scheduleData.startDate;
+      const enddate = scheduleData.endDate;
+      const cliff = scheduleData.cliff;
 
-     const sd=scheduleData.startDate;
-     const ed=scheduleData.endDate;
-     const sp=scheduleData.startPercentage;
-     const lpac=scheduleData.linearPercentageAfterCliff;
-     const c=scheduleData.cliff;
-     const cp=scheduleData.cliffPercentage
+      const sp = parseInt(scheduleData.startPercentage);
+      const lpac = parseInt(scheduleData.linearPercentageAfterCliff);
+      const cp = parseInt(scheduleData.cliffPercentage);
 
-     const so=moment(sd, "DD/MM/YYYY")
-     const su=so.unix();
-     console.log(su)
+      const startUnix = moment(startdate, "DD/MM/YYYY").unix();
+      const endUnix = moment(enddate, "DD/MM/YYYY").unix();
+      const cliffUnix = moment().add(cliff, "days").unix();
 
-     const eo=moment(ed, "DD/MM/YYYY")
-     const eu=eo.unix();
-     console.log(eu)
+      const totalVestingDuration = endUnix - startUnix;
+      console.log(startUnix);
+      console.log(endUnix);
+      console.log(cliffUnix);
+      console.log(totalVestingDuration);
 
-     const co=moment().set('day',c)
-     const cu=co.unix();
-     console.log(cu)
-      
-     const totalVestingDuration=eu-su;
+      const web3 = new Web3("https://testnet.inco.org");
+      const contract = new web3.eth.Contract(vestingabi.abi, VESTING_ADDRESS);
 
+      const instance = await getInstance();
 
-     const instance = await getInstance();
-     const reencrypt = await getReencryptPublicKey(CAPTABLE_DATA);
-     console.log(reencrypt);
-     console.log(await instance.hasKeypair(CAPTABLE_DATA));
-     const contractInstance=await captableContract();
+      const contractInstance = await captableContract();
 
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+      const accounts = await window.ethereum.request({
+        method: "eth_accounts",
+      });
 
-     const contractDataInstance = await captableDataContract();
+      const key = await contractInstance.adminKey(accounts[0]);
 
-     await window.ethereum.request({ method: 'eth_requestAccounts' });
-     const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-     console.log(accounts)
-     
-     const key=await contractInstance.adminKey(accounts[0]);
-     console.log(key)
+      const vestContract = await vestingContract();
 
-      
-      const totalAmount =await contractDataInstance.viewCompanytotalFund(key,reencrypt.publicKey, reencrypt.signature)
-      console.log("TX",totalAmount);
-      const ta=await instance.decrypt(CAPTABLE_DATA,totalAmount);
+      const sde = await instance.encrypt32(startUnix);
+      const tvde = await instance.encrypt32(totalVestingDuration);
+      const ce = await instance.encrypt32(cliffUnix);
+      const spe = await instance.encrypt32(sp);
+      const lpace = await instance.encrypt32(lpac);
+      const cpe = await instance.encrypt32(cp);
 
-      const se=await instance.encrypt32((+su));
-      // const ee=await instance.encrypt32(eu);
-      const tvde=await instance.encrypt32((+totalVestingDuration));
-      const ce=await instance.encrypt32((cu));
-      const tae=await instance.encrypt32(ta)
-      const lpace=await instance.encrypt32((+lpac));
-      const spe=await instance.encrypt32((+sp));
-      const cpe=await instance.encrypt32((+cp));
+      const captablecontract=await captableContract();
 
-      console.log("se",se);
-      console.log("tvde",tvde);
-      console.log("ce",ce);
-      console.log("ta",tae)
-      
-      console.log("lpace",lpace);
-      console.log("spe",spe);
-      console.log("cpe",cpe);
-
-      const vestingInstance=await vestingContract();
-      
-      const vestingParams={
-        startTimestamp:se,
-        cliffDurationInSeconds:ce,
-        totalVestingDurationInSeconds:tvde,
-        totalAmount:tae,
-        EreleaseAtStartPercentage:spe,
-        EreleaseAtCliffPercentage:cpe,
-        ElinearReleasePercentage:lpace
+      const period = {
+        start: startUnix,
+        cliffDuration: cliffUnix,
+        totalDuration: totalVestingDuration,
+        amountTotal:100,
+        releaseAtStartPercentage:10,
+        releaseAtCliffPercentage:10,
+        linearReleasePercentage:10
       }
-     
-
-      const vr=await vestingInstance.addVestingSchedule(
-        key,{
-          startTimestamp:se,
-          cliffDurationInSeconds:ce,
-          totalVestingDurationInSeconds:tvde,
-          totalAmount:t,
-          EreleaseAtStartPercentage:spe,
-          EreleaseAtCliffPercentage:cpe,
-          ElinearReleasePercentage:lpace
-        }
-        )
-
-      console.log("HEllo",vr)
-
       
+
+      const addPeriod = await captablecontract.addSchedule(period,key)
+      console.log("Vesting period added successfully:", addPeriod);
+
+      const addPercentage= contract.methods.addVestingPercentage(key,percentages)
+      console.log("Vesting percentages added successfully:", addPeriod);
+
+
     } catch (error) {
-      console.log("Error",error)
-      
+      console.error("Error adding vesting period:", error);
     }
-   
-      
   };
 
   return (
@@ -133,7 +107,7 @@ const VestingSchedule = ({ onClose }) => {
             Vesting Schedule
           </h1>
           <svg
-          onClose={onClose}
+            onClose={onClose}
             width="14"
             height="14"
             viewBox="0 0 14 14"
@@ -197,11 +171,11 @@ const VestingSchedule = ({ onClose }) => {
                 />
               </div>
               <div className="">
-                <h1 className="font-source-code-pro  ml-2 text-sm text-[#212427]">
-                  Linear Percentage after cliff
+                <h1 className="font-source-code-pro ml-2   text-sm text-[#212427]">
+                  Linear Percentage 
                 </h1>
                 <input
-                  className="font-source-code-pro w-[83%] ml-[18%] p-2 focus:outline-none border border-[#BDBDBD] rounded-lg "
+                  className="font-source-code-pro w-[98s%] ml-[3%] p-2 focus:outline-none border border-[#BDBDBD] rounded-lg "
                   type="text"
                   name="linearPercentageAfterCliff"
                   value={scheduleData.linearPercentageAfterCliff}
@@ -218,7 +192,7 @@ const VestingSchedule = ({ onClose }) => {
                 </h1>
                 <div className="flex items-center justify-between pr-2  w-[88%] focus:outline-none border border-[#BDBDBD] rounded-lg ">
                   <input
-                    className="font-source-code-pro  ml-1 w-[100%] focus:outline-none p-2 "
+                    className="font-source-code-pro  rounded-l-lg  w-[100%] focus:outline-none p-2 "
                     type="text"
                     name="cliff"
                     value={scheduleData.cliff}
@@ -226,7 +200,7 @@ const VestingSchedule = ({ onClose }) => {
                     placeholder="5 Days "
                   />
                   <svg
-                    className="cursor-pointer"
+                    className="cursor-pointer ml-1"
                     width="17"
                     height="10"
                     viewBox="0 0 17 10"
@@ -256,28 +230,28 @@ const VestingSchedule = ({ onClose }) => {
                   placeholder="Enter %"
                 />
               </div>
-            </div>  
-              <div className="flex justify-between w-[100%] p-2 focus:outline-dashed border border-dashed border-[#3A74F2] rounded-lg ">
-                <h1 className="text-[#3A74F2] text-sm font-source-code-pro p-1 ">
-                  Next Cliff in:
-                </h1>
-                <h1 className="text-[#3A74F2] text-sm font-source-code-pro p-1 ">
-                  DD/MM/YY
-                </h1>
-              </div>
-              <div className="flex">
-                <button
-                  type="submit"
-                  className="font-source-code-pro text-lg bg-[#3A74F2] px-3 rounded-lg text-[#FFFFFF] cursor-pointer p-1"
-                >
-                  Add Schedule
-                </button>
-              </div>
+            </div>
+            <div className="flex justify-between w-[100%] p-2 focus:outline-dashed border border-dashed border-[#3A74F2] rounded-lg ">
+              <h1 className="text-[#3A74F2] text-sm font-source-code-pro p-1 ">
+                Next Cliff in:
+              </h1>
+              <h1 className="text-[#3A74F2] text-sm font-source-code-pro p-1 ">
+                DD/MM/YY
+              </h1>
+            </div>
+            <div className="flex">
+              <button
+                type="submit"
+                className="font-source-code-pro text-lg bg-[#3A74F2] px-3 rounded-lg text-[#FFFFFF] cursor-pointer p-1"
+              >
+                Add Schedule
+              </button>
+            </div>
           </div>
         </form>
       </div>
-      </div>
-      );
+    </div>
+  );
 };
 
 export default VestingSchedule;

@@ -6,7 +6,7 @@ import SteppedGraph from "../Components/MyChart.jsx";
 import { CAPTABLE_ADDRESS, CAPTABLE_DATA, captableContract, captableDataContract, getInstance } from "../utils/fhevm.jsx";
 import { getReencryptPublicKey } from "../utils/RencryptPublicKey.jsx";
 import Web3 from "web3";
-import captableAddress from "../JSON/CapTableData (4).json";
+import captableAddress from "../JSON/CapTableData (5).json";
 import { useLocation } from "react-router-dom";
 
 export const claimed = {
@@ -37,9 +37,10 @@ export default function Dashboard_emp() {
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const companykey = searchParams.get("companyKey");
-    if (companykey) {
+   
       setCompanyKey(companykey);
-    }
+      console.log(companyKey);
+  
   }, [location.search]);
 
 
@@ -60,19 +61,12 @@ export default function Dashboard_emp() {
       
 
       console.log(companyKey);
+
       
-      const web3 = new Web3("https://testnet.inco.org");
-      const contract = new web3.eth.Contract(captableAddress.abi,CAPTABLE_DATA );
 
-      const empname = await contract.methods.viewEmployeName(companyKey).call((error, result) => {
-        if (!error) {
-          console.log("Result", result);
-        } else {
-          console.log("Error", error);
-        }
-      })
-
-      console.log("empname",empname);
+      const empname=await contractDataInstance.viewEmployeName(companyKey);
+      setEmpName(empname);
+      console.log(empname);
 
       const employeeTotalAllocations = await contractDataInstance.viewEmployeTotalAllocation(companyKey, reencrypt.publicKey, reencrypt.signature,accounts[0])
       console.log("TX", employeeTotalAllocations);
@@ -98,7 +92,8 @@ export default function Dashboard_emp() {
   }
   useEffect(() => {
     dataView();
-  }, []);
+  }, [companyKey]);
+
   return (
     <>
       <div className="flex h-[100vh]">
@@ -113,7 +108,7 @@ export default function Dashboard_emp() {
             {/* {open && <div className="fixed inset-0 bg-black bg-opacity-50 z-10"></div>} */}
             <div className=" flex justify-between items-center bg-white w-[100%] h-[10vh] border-t border-b  border-gray-300   ">
               <h1 className="ml-[20px] text-2xl font-source-code-pro font-normal">
-                Manish Verma
+                {empName}
               </h1>
 
               <div className="flex gap-5 w-[50%] justify-end items-end">
@@ -149,22 +144,22 @@ export default function Dashboard_emp() {
             {/* allocations div */}
             <div className="ml-[20px] flex mt-[20px] border-[#76787A] border-[1px] justify-between rounded-lg w-[full] h-[120px] mr-[20px] ">
               <div className=" p-[16px] flex flex-col justify-between h-[120px]  border-r w-[282.5px] border-[#76787A]">
-                <h4 className=" text-[16px] text-[#76787A]  font-source-code-pro ">Allocated</h4>
+                <h4 className=" text-[16px] text-[#BDBDBD]  font-source-code-pro ">Allocated</h4>
                 <h1 className="text-[24px]  font-source-code-pro ">{totalAlloc}</h1>
               </div>
 
               <div className=" flex flex-col p-[16px] justify-between h-[120px] border-[#76787A] border-r w-[282.5px]">
-                <h4 className="text-[16px] text-[#76787A]  font-source-code-pro ">Unlocked</h4>
+                <h4 className="text-[16px] text-[#BDBDBD]  font-source-code-pro ">Unlocked</h4>
                 <h1 className="text-[24px]   font-source-code-pro ">{unlocked}</h1>
               </div>
 
               <div className=" flex flex-col p-[16px] justify-between h-[120px]  border-r w-[282.5px] border-[#76787A]">
-                <h4 className="text-[16px] text-[#76787A]  font-source-code-pro ">Locked</h4>
+                <h4 className="text-[16px] text-[#BDBDBD]  font-source-code-pro ">Locked</h4>
                 <h1 className="text-[24px]   font-source-code-pro ">{locked}</h1>
               </div>
 
               <div className=" flex flex-col  p-[16px] justify-between h-[120px]  w-[282.5px] border-[#76787A]">
-                <h4 className="text-[16px] text-[#76787A]">Claimed </h4>
+                <h4 className="text-[16px] text-[#BDBDBD]">Claimed </h4>
                 <h1 className="text-[24px]  font-source-code-pro ">{claimed}</h1>
               </div>
             </div>

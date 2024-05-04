@@ -17,7 +17,7 @@ const SearchField = () => {
                             <label htmlFor="search" className="relative">
                                 <input
                                     id="search"
-                                    className="ml-2 border-[#76787A] bg-[#F4F4F4] w-[400px] h-[40px] mr-[10px] rounded-[12px] pl-[30px] placeholder-gray-400"
+                                    className="ml-2 font-source-code-pro border-[#76787A] bg-[#F4F4F4] w-[400px] h-[40px] mr-[10px] rounded-[12px] pl-[30px] placeholder-gray-400"
                                     type="text"
                                     placeholder="Search using Keyword"
                                 />

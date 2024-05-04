@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import bitPng from "../assets/bit.png";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/logo.png"
+import logo from "../assets/logo.png";
 const SideBar2 = () => {
   const [activeHeading, setActiveHeading] = useState(null);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   const handleClick = (heading) => {
     setActiveHeading(heading);
-    navigate('/allocations')
+    navigate("/allocations");
   };
 
   const isHeadingActive = (heading) => {
@@ -18,78 +18,62 @@ const SideBar2 = () => {
   return (
     <div className="w-[20%]   h-screen border border-[#E8E8E8] flex flex-col justify-between ">
       <div>
-      <img className="m-5" src={logo} alt="" />
+        <img className="m-5" src={logo} alt="" />
         <div className="flex flex-col">
-        <h1 className="-mb-[25%] mt-[30%] ml-5">Menu</h1>
-        <h1
-          className={`text-[#212427] items-center rounded-xl p-2 mx-[10%] mt-20 flex gap-[10px] hover:bg-[#F4F4F4] ${
-            isHeadingActive("Dashboard") ? "bg-[#F4F4F4]" : "bg-white"
-          }`}
-          onClick={() => handleClick("Dashboard")}
-
-        >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+          <h1 className="-mb-[25%] mt-[30%] font-source-code-pro ml-5">Menu</h1>
+          <h1
+            className={`text-[#212427] font-source-code-pro items-center rounded-xl p-2 mx-[10%] mt-20 flex gap-[10px] hover:bg-[#F4F4F4] ${
+              isHeadingActive("Dashboard") ? "bg-[#F4F4F4]" : "bg-white"
+            }`}
+            onClick={() => handleClick("Dashboard")}
           >
-            <g clipPath="url(#clip0_1_57)">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
-                d="M9 4.5H6V1.5H4.5V4.5H1.5V6H4.5V9H6V6H9V4.5Z"
-                fill="black"
+                d="M12.75 9.75V3H21V9.75H12.75ZM3 12.75V3H11.25V12.75H3ZM12.75 21V11.25H21V21H12.75ZM3 21V14.25H11.25V21H3ZM4.5 11.25H9.75V4.5H4.5V11.25ZM14.25 19.5H19.5V12.75H14.25V19.5ZM14.25 8.25H19.5V4.5H14.25V8.25ZM4.5 19.5H9.75V15.75H4.5V19.5Z"
+                fill="#212427"
               />
+            </svg>
+            Dashboard
+          </h1>
+          <h1
+            className={`text-[#212427] mx-[10%] items-center rounded-lg p-2 font-source-code-pro m-2 flex gap-[10px] hover:bg-[#F4F4F4] ${
+              isHeadingActive("Transaction") ? "bg-[#F4F4F4]" : "bg-white"
+            }`}
+            onClick={() => handleClick("Transaction")}
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
-                d="M18 5H18.5V4.5V3.5H22V7H21H20.5V7.5V18V18.5H21H22V22H18.5V21V20.5H18H7.5H7V21V22H3.5V18.5H4.5H5V18V12.5H5.5V18V18.5H6H7V19.5V20H7.5H18H18.5V19.5V18.5H19.5H20V18V7.5V7H19.5H18.5V6V5.5H18H12.5V5H18ZM6 21.5H6.5V21V19.5V19H6H4.5H4V19.5V21V21.5H4.5H6ZM21 21.5H21.5V21V19.5V19H21H19.5H19V19.5V21V21.5H19.5H21ZM19.5 4H19V4.5V6V6.5H19.5H21H21.5V6V4.5V4H21H19.5Z"
-                fill="black"
+                d="M5.5 19L1 14.5M1 14.5L5.5 10M1 14.5H14.5M14.5 1L19 5.5M19 5.5L14.5 10M19 5.5H5.5"
                 stroke="black"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
-            </g>
-            <defs>
-              <clipPath id="clip0_1_57">
-                <rect width="24" height="24" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
-          Dashboard
-        </h1>
-        <h1
-          className={`text-[#212427] mx-[10%] items-center rounded-lg p-2 m-2 flex gap-[10px] hover:bg-[#F4F4F4] ${
-            isHeadingActive("Transaction") ? "bg-[#F4F4F4]" : "bg-white"
-          }`}
-          onClick={() => handleClick("Transaction")}
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M5.5 19L1 14.5M1 14.5L5.5 10M1 14.5H14.5M14.5 1L19 5.5M19 5.5L14.5 10M19 5.5H5.5"
-              stroke="black"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          Transaction
-        </h1>
+            </svg>
+            Transaction
+          </h1>
         </div>
       </div>
       <div className="w-[220px] h-[284px] ml-5  flex flex-col">
-       
         <div className="w-[220px] h-[120px] flex mt-[50%] p-2 bg-[#E8E8E8] rounded-lg">
-          <img
-            src={bitPng}
-            className="w-[114px]  h-[64px] -ml-7"
-            alt=""
-          />
+          <img src={bitPng} className="w-[114px]  h-[64px] -ml-7" alt="" />
           <div className="flex flex-col">
-            <h1 className="text-4xl -ml-5">Bit</h1>
-            <h1 className=" -ml-5 text-[#76787A]">1 company</h1>
+            <h1 className="text-4xl -ml-5 font-source-code-pro">Bit</h1>
+            <h1 className=" -ml-6 text-[#76787A] font-source-code-pro">
+              1 company
+            </h1>
           </div>
           <div className="m-6">
             <svg

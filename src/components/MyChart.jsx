@@ -6,7 +6,7 @@ import { claimed } from '../Pages/Dashboard_emp';
 const SteppedGraph = () => {
   // Sample data for the graph
   const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: ['18 Mar,2021', '18 Mar,2021', '18 Mar,2021', '18 Mar,2021', '18 Mar,2021', '18 Mar,2021', '18 Mar,2021'],
     datasets: [
       {
         label: ['Unlocked','Claimed'],
@@ -28,11 +28,32 @@ const SteppedGraph = () => {
   // Chart options
   const options = {
     maintainAspectRatio: false, // Disable maintain aspect ratio
-    scales: {
-      x: {
-         border: {
-          display: false,
+    
+    scales:{
+      x:{
+        border:{
+          display:false,
         },
+        ticks:{
+          font:{
+            family:"source-code-pro",
+            size:15
+          }
+        }
+      },
+      y:{
+        beginAtZero:true,
+        ticks:{display:false},
+        border:{
+          display:false
+        },
+        grid:{
+          drawTicks:false,
+          color:(ctx)=>{
+            const value=ctx?.tick?.value;
+            return typeof value !== 'undefined' && value === 0 ? "transparent":"rgba(102,102,102,0.2)"
+          }
+        }
       }
     },
     elements: {
@@ -48,6 +69,9 @@ const SteppedGraph = () => {
         right: 0, // Set right padding to 0
       }
     },
+    plugins:{
+legend:{display:false},
+    },
     borderColor: 'transparent' // Hide border
   };
 
@@ -56,7 +80,6 @@ const SteppedGraph = () => {
     data: data,
     options: {
       
-     
       responsive: true,
       interaction: {
         intersect: false,
@@ -64,6 +87,7 @@ const SteppedGraph = () => {
         
       },
       plugins: {
+        legend:{display:false},
         title: {
           display: true,
           text: (ctx) => 'Step ' + ctx.chart.data.datasets[0].stepped + ' Interpolation',
