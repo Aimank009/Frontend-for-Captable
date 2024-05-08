@@ -25,9 +25,9 @@ const handleClick=()=>{
   return (
     <>
       <div className="w-full h-screen flex flex-row  items-center  justify-between">
-        <div className="border rounded-[30px] w-[35%] mx-[10%] h-[450px] relative border-[#E8E8E8]">
+        <div className="border rounded-[30px] w-[35%] mx-[10%] h-[510px] relative border-[#E8E8E8]">
           <form onSubmit={handleSubmit} className="">
-            <div className=" text-center pt-5">
+            <div className=" text-center pt-5 pb-12">
               <h1 className="font-source-code-pro text-[30px] text-[#212427]">
                 Create Company
               </h1>
@@ -62,13 +62,13 @@ const handleClick=()=>{
             />
 
             {connectWallet ? (
-              <h1 className="ml-5 text-center w-[85%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px] mr-[10px] mt-[3.33%] text-[#FFFFFF]">
+              <h1 className="ml-5 text-center w-[85%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px] mr-[10px] mt-[8%] text-[#FFFFFF]">
                 Creating Company ...
               </h1>
             ) : (
               <button
                 onClick={handleConnect}
-                className="ml-9 text-center w-[85%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px] mr-[10px] mt-[3.33%] text-[#FFFFFF]"
+                className="ml-9 text-center w-[85%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px] mr-[10px] mt-[8%] text-[#FFFFFF]"
               >
                 Create Company Key
               </button>
@@ -76,24 +76,26 @@ const handleClick=()=>{
           </form>
         </div>
 
-        <div className="rounded-[10%] w-[42%] h-[90%] mr-4 md:mr-20 md:ml-0 sm:ml-4">
-          <div className="rounded-[5%] h-[100%] w-[100%] bg-[#3A74F2] text-left">
-            <img className="pt-5 w-[30%]" src={logo_2} alt="" />
-            <div className="w-[80%] pt-20 pl-10">
-              <h1 className="font-source-code-pro text-[#FFFFFF] text-[380%]">
+        <div className="rounded-[10%] w-[42%] h-[90%] mr-10">
+          <div className="rounded-[5%] flex flex-col justify-between  h-[100%] w-[100%] bg-[#3A74F2] text-left">
+            <div>
+            <img className="pt-10 w-[30%] pl-5 " src={logo_2} alt="" />
+            <div className="w-[80%] pt-5 pl-10">
+              <h1 className="font-source-code-pro text-[#FFFFFF] text-[60px]">
                 Private Captable
               </h1>
 
-              <h1 className="font-source-code-pro text-[#FFFFFF] text-[380%]">
+              <h1 className="font-source-code-pro text-[#FFFFFF] text-[60px]">
                 Built on FHE
               </h1>
 
-              <h1 className="font-source-code-pro mt-10 text-[#FFFFFF] text-[100%]">
+              <h1 className="font-source-code-pro mt-10 text-[#FFFFFF] text-[18px]">
                 Allocate your token now privately.
               </h1>
             </div>
+            </div>
 
-            <h1 onClick={handleClick} className=" font-source-code-pro mt-[20%] pl-10 pb-10 text-[#FFFFFF] text-[100%] flex gap-2 items-center hover:underline cursor-pointer">
+            <h1 onClick={handleClick} className=" font-source-code-pro  p-10  text-[#FFFFFF] text-[100%] flex gap-2 items-center hover:underline cursor-pointer">
               Already have a Company
               <svg
                 width="15"

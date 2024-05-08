@@ -41,7 +41,7 @@ export default function CompanyKey() {
           </h1>
         </div>
 
-        <h1 className="font-medium font-source-code-pro ml-8 mt-5 mb-2 text-sm text-[#212427]">
+        <h1 className="font-medium font-source-code-pro ml-8 mt-7 mb-2 text-sm text-[#212427]">
           Company key
         </h1>
         <div className="pb-5 flex items-center  justify-center gap-4">
@@ -52,8 +52,8 @@ export default function CompanyKey() {
            className=" w-[75%] h-[56px] font-source-code-pro focus:outline-[#3A74F2] border border-[#BDBDBD] text-black rounded-xl px-2"/>
             
          
-
-          <svg
+<div className="flex flex-col">
+<svg
             width="42"
             height="42"
             viewBox="0 0 42 42"
@@ -70,7 +70,12 @@ export default function CompanyKey() {
               strokeLinejoin="round"
             />
           </svg>
-          {copied && <p className="text-green-500">Copied to clipboard!</p>}
+          {copied && 
+          <div className="text-[#5B5B5D]">
+            Copied
+          </div>}
+</div>
+         
         </div>
         <h1
           onClick={handleClick}
@@ -80,15 +85,15 @@ export default function CompanyKey() {
         </h1>
       </div>
 
-      <div className="rounded-[20px] w-full sm:w-[80%] md:w-[40%] h-[90%] mr-4 md:mr-20 md:ml-0 sm:ml-4">
+      <div className="rounded-[20px] w-[42%] h-[90%] mr-4 md:mr-20 md:ml-0 sm:ml-4">
         <div className="rounded-[20px] h-[100%] w-[100%] bg-[#3A74F2] text-left">
           <img className="pt-5 w-[30%]" src={logo_2} alt="" />
           <div className="w-[75%] pt-20 pl-10 h-[40%px]">
-            <h1 className="font-source-code-pro text-[#FFFFFF] text-[300%]">
+            <h1 className="font-source-code-pro text-[#FFFFFF] text-[380%]">
               Private Captable
             </h1>
 
-            <h1 className="font-source-code-pro text-[#FFFFFF] text-[300%]">
+            <h1 className="font-source-code-pro text-[#FFFFFF] text-[350%]">
               Built on FHE
             </h1>
 
@@ -97,25 +102,7 @@ export default function CompanyKey() {
             </h1>
           </div>
 
-          <h1 className="font-source-code-pro pt-[30%] pl-10 pb-10 text-[#FFFFFF] text-[100%] flex gap-2 items-center hover:underline cursor-pointer">
-            Already have a Company
-            <svg
-              width="15"
-              height="15"
-              viewBox="0 0 18 18"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="hover:underline"
-            >
-              <path
-                d="M1.5 16.5L16.5 1.5M16.5 1.5L5.25 1.5M16.5 1.5L16.5 12.75"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </h1>
+        
         </div>
       </div>
     </div>

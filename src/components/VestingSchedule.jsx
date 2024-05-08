@@ -13,6 +13,8 @@ import vestingabi from "../JSON/Vesting (3).json";
 import Web3 from "web3";
 
 const VestingSchedule = ({ onClose }) => {
+  const [allocations, setAllocations] = useState(0);
+  const [nextCliff, setNextCliff] = useState("");
   const [scheduleData, setScheduleData] = useState({
     startDate: "",
     endDate: "",
@@ -33,23 +35,6 @@ const VestingSchedule = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const startdate = scheduleData.startDate;
-      const enddate = scheduleData.endDate;
-      const cliff = scheduleData.cliff;
-
-      const sp = parseInt(scheduleData.startPercentage);
-      const lpac = parseInt(scheduleData.linearPercentageAfterCliff);
-      const cp = parseInt(scheduleData.cliffPercentage);
-
-      const startUnix = moment(startdate, "DD/MM/YYYY").unix();
-      const endUnix = moment(enddate, "DD/MM/YYYY").unix();
-      const cliffUnix = moment().add(cliff, "days").unix();
-
-      const totalVestingDuration = endUnix - startUnix;
-      console.log(startUnix);
-      console.log(endUnix);
-      console.log(cliffUnix);
-      console.log(totalVestingDuration);
 
       const web3 = new Web3("https://testnet.inco.org");
       const contract = new web3.eth.Contract(vestingabi.abi, VESTING_ADDRESS);
@@ -57,43 +42,67 @@ const VestingSchedule = ({ onClose }) => {
       const instance = await getInstance();
 
       const contractInstance = await captableContract();
-
       await window.ethereum.request({ method: "eth_requestAccounts" });
       const accounts = await window.ethereum.request({
         method: "eth_accounts",
       });
-
       const key = await contractInstance.adminKey(accounts[0]);
 
-      const vestContract = await vestingContract();
+      const startdate = scheduleData.startDate;
+      const enddate = scheduleData.endDate;
+      const cliff = parseInt(scheduleData.cliff);
 
-      const sde = await instance.encrypt32(startUnix);
-      const tvde = await instance.encrypt32(totalVestingDuration);
-      const ce = await instance.encrypt32(cliffUnix);
-      const spe = await instance.encrypt32(sp);
-      const lpace = await instance.encrypt32(lpac);
-      const cpe = await instance.encrypt32(cp);
+      const sp = parseInt(scheduleData.startPercentage);
+      const lpac = parseInt(scheduleData.linearPercentageAfterCliff);
+      const cp = parseInt(scheduleData.cliffPercentage);
 
-      const captablecontract=await captableContract();
+      const startUnix = moment(startdate, "DD-MM-YYYY").unix();
+      const endUnix = moment(enddate, "DD-MM-YYYY").unix();
+      const cliffUnix = moment().add(cliff, "days").unix();
+
+      const nextCliffUnix = startUnix + cliff * 24 * 60 * 60;; // Convert days to seconds
+      const momentobj = moment.unix(nextCliffUnix);
+      setNextCliff(momentobj.format("DD-MM-YYYY"));
+      console.log(momentobj.format("DD-MM-YYYY"));
+
+      const totalVestingDuration = endUnix - startUnix;
+      console.log(startUnix);
+      console.log(endUnix);
+      console.log(cliffUnix);
+      console.log(totalVestingDuration);
+
+     
+
+      
+
+      const reencrypt = await getReencryptPublicKey(CAPTABLE_DATA);
+      console.log(reencrypt);
+      const contractDataInstance = await captableDataContract();
+
+      const companyTotalFunds = await contractDataInstance.viewCompanytotalFund(
+        key,
+        reencrypt.publicKey,
+        reencrypt.signature
+      );
+      console.log("TX", companyTotalFunds);
+      const alloc = await instance.decrypt(CAPTABLE_DATA, companyTotalFunds);
+      setAllocations(alloc.toString());
+      console.log(allocations);
+
+      const captablecontract = await captableContract();
 
       const period = {
         start: startUnix,
         cliffDuration: cliffUnix,
         totalDuration: totalVestingDuration,
-        amountTotal:100,
-        releaseAtStartPercentage:10,
-        releaseAtCliffPercentage:10,
-        linearReleasePercentage:10
-      }
-      
+        amountTotal: parseInt(allocations),
+        releaseAtStartPercentage: sp,
+        releaseAtCliffPercentage: cp,
+        linearReleasePercentage: lpac,
+      };
 
-      const addPeriod = await captablecontract.addSchedule(period,key)
+      const addPeriod = await captablecontract.addSchedule(period, key);
       console.log("Vesting period added successfully:", addPeriod);
-
-      const addPercentage= contract.methods.addVestingPercentage(key,percentages)
-      console.log("Vesting percentages added successfully:", addPeriod);
-
-
     } catch (error) {
       console.error("Error adding vesting period:", error);
     }
@@ -134,7 +143,7 @@ const VestingSchedule = ({ onClose }) => {
                 </h1>
                 <input
                   className=" font-source-code-pro w-[100%] p-2 focus:outline-none border border-[#BDBDBD] rounded-lg "
-                  type="text"
+                  type="date"
                   name="startDate"
                   value={scheduleData.startDate}
                   onChange={handleChange}
@@ -147,7 +156,7 @@ const VestingSchedule = ({ onClose }) => {
                 </h1>
                 <input
                   className="font-source-code-pro w-[100%] p-2 focus:outline-none border border-[#BDBDBD] rounded-lg "
-                  type="text"
+                  type="date"
                   name="endDate"
                   value={scheduleData.endDate}
                   onChange={handleChange}
@@ -163,7 +172,7 @@ const VestingSchedule = ({ onClose }) => {
                 </h1>
                 <input
                   className="font-source-code-pro w-[100%] p-2 focus:outline-none border border-[#BDBDBD] rounded-lg "
-                  type="text"
+                  type="number"
                   name="startPercentage"
                   value={scheduleData.startPercentage}
                   onChange={handleChange}
@@ -172,11 +181,11 @@ const VestingSchedule = ({ onClose }) => {
               </div>
               <div className="w-[44%]">
                 <h1 className="font-source-code-pro    text-sm text-[#212427]">
-                  Linear Percentage 
+                  Linear Percentage
                 </h1>
                 <input
                   className="font-source-code-pro w-[100%]  p-2 focus:outline-none border border-[#BDBDBD] rounded-lg "
-                  type="text"
+                  type="number"
                   name="linearPercentageAfterCliff"
                   value={scheduleData.linearPercentageAfterCliff}
                   onChange={handleChange}
@@ -190,31 +199,15 @@ const VestingSchedule = ({ onClose }) => {
                 <h1 className="font-source-code-pro text-sm text-[#212427]">
                   Cliff
                 </h1>
-                <div className="flex items-center justify-between pr-2  w-[100%] focus:outline-none border border-[#BDBDBD] rounded-lg ">
+                <div className="flex items-center justify-between   w-[100%] focus:outline-none border border-[#BDBDBD] rounded-lg ">
                   <input
-                    className="font-source-code-pro  rounded-l-lg  w-[100%] focus:outline-none p-2 "
-                    type="text"
+                    className="font-source-code-pro  rounded-lg  w-[100%] focus:outline-none p-2 "
+                    type="number"
                     name="cliff"
                     value={scheduleData.cliff}
                     onChange={handleChange}
                     placeholder="5 Days "
                   />
-                  <svg
-                    className="cursor-pointer ml-1"
-                    width="17"
-                    height="10"
-                    viewBox="0 0 17 10"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M16 1.25L8.5 8.75L1 1.25"
-                      stroke="#BDBDBD"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
                 </div>
               </div>
               <div className="w-[44%]">
@@ -223,7 +216,7 @@ const VestingSchedule = ({ onClose }) => {
                 </h1>
                 <input
                   className="font-source-code-pro w-[100%] p-2 focus:outline-none border border-[#BDBDBD] rounded-lg "
-                  type="text"
+                  type="number"
                   name="cliffPercentage"
                   value={scheduleData.cliffPercentage}
                   onChange={handleChange}
@@ -236,7 +229,7 @@ const VestingSchedule = ({ onClose }) => {
                 Next Cliff in:
               </h1>
               <h1 className="text-[#3A74F2] text-sm font-source-code-pro p-1 ">
-                DD/MM/YY
+                DD-MM-YYYY
               </h1>
             </div>
             <div className="flex">

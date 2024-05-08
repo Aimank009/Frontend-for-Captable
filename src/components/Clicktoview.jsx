@@ -80,7 +80,7 @@ function ClickToViewContent() {
       {isVisible == true ? (
         <div>
           <div className=" flex  border-[#BDBDBD] border-[1px] justify-between rounded-lg w-[full] h-[120px] m-[20px]">
-            <div className=" p-[16px] flex flex-col justify-between h-[120px]  border-r w-[282.5px] border-[#76787A]">
+            <div className=" p-[16px] flex flex-col justify-between h-[120px]  border-r w-[282.5px] border-[#BDBDBD]">
               <h4 className=" text-[16px] text-[#BDBDBD] font-source-code-pro">
                 Company Key
               </h4>
@@ -110,7 +110,7 @@ function ClickToViewContent() {
               </div>{" "}
             </div>
 
-            <div className=" flex flex-col p-[16px] justify-between h-[120px] border-[#76787A] border-r w-[282.5px]">
+            <div className=" flex flex-col p-[16px] justify-between h-[120px] border-[#BDBDBD] border-r w-[282.5px]">
               <h4 className="text-[16px] text-[#BDBDBD] font-source-code-pro">
                 Total Allocation
               </h4>
@@ -119,7 +119,7 @@ function ClickToViewContent() {
               </h1>
             </div>
 
-            <div className=" flex flex-col p-[16px] justify-between h-[120px]  border-r w-[282.5px] border-[#76787A]">
+            <div className=" flex flex-col p-[16px] justify-between h-[120px]  border-r w-[282.5px] border-[#BDBDBD]">
               <h4 className="text-[16px] text-[#BDBDBD] font-source-code-pro">
                 Total Unlocked
               </h4>
@@ -128,7 +128,7 @@ function ClickToViewContent() {
               </h1>
             </div>
 
-            <div className=" flex flex-col  p-[16px] justify-between h-[120px]  w-[282.5px] border-[#76787A]">
+            <div className=" flex flex-col  p-[16px] justify-between h-[120px]  w-[282.5px] border-[#BDBDBD]">
               <h4 className="text-[16px] text-[#BDBDBD] font-source-code-pro">
                 No. of Employees{" "}
               </h4>

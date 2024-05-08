@@ -37,10 +37,10 @@ const LandingPage = () => {
           </h1>
           
           <div className="flex gap-[1.11vw] mt-[2.78%]">
-            <h1 onClick={handleCreateComapny} className="font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[1.67vw] py-[1.11vw] text-[#FFFFFF]">
+            <h1 onClick={handleCreateComapny} className="w-[250px] font-[500] flex items-center justify-center text-[16px] font-source-code-pro cursor-pointer rounded-xl bg-[#3A74F2]  text-[#FFFFFF]">
               For Company Owner
             </h1>
-            <h1 onClick={handleEmploy} className="font-source-code-pro cursor-pointer rounded-lg bg-[#FFFFFF] border border-[#3A74F2] px-[1.67vw] py-[1.11vw] text-[#3A74F2]">
+            <h1 onClick={handleEmploy} className="w-[250px]  font-[500] flex items-center justify-center font-source-code-pro cursor-pointer rounded-lg bg-[#FFFFFF] border border-[#3A74F2] px-[1.67vw] py-[1.11vw] text-[#3A74F2]">
               For Employee
             </h1>
             

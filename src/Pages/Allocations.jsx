@@ -58,7 +58,7 @@ useEffect(() => {
         <SideBar />
       </div>
       <div className="flex-1 w-[70%] overflow-y-auto">
-        <div className="border-b mt-[1%]">
+        <div className="mt-[1%]">
           <Connect>{(account, provider) => null}</Connect> 
         </div>
         {open && <div className="fixed inset-0 bg-black bg-opacity-50 z-10"></div>}
@@ -71,7 +71,7 @@ useEffect(() => {
           </div>
         :
           <div className="flex flex-col gap-5 -ml-15 justify-center items-center h-[60%]">
-            <img src={cvImage} alt="" />
+            <img className="w-[220px] h-[180px]" src={cvImage} alt="" />
             <div className="flex flex-col">
               <h1 className="font-source-code-pro text-[130%]">
                 Looks pretty empty here !!
@@ -84,7 +84,7 @@ useEffect(() => {
               </h1>
             </div>
             <button onClick={handleClick} 
-              className="cursor-pointer w-[20%] flex items-center justify-center gap-2 font-source-code-pro border border-[#3A74F2] rounded-lg text-[#3A74F2] p-4">
+              className="cursor-pointer w-[13.5%%] h-[10%] flex items-center justify-center gap-2 font-source-code-pro border border-[#3A74F2] rounded-lg text-[#3A74F2] p-4">
               Add Employee
               <svg
                 width="12"

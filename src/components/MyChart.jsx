@@ -42,6 +42,7 @@ const SteppedGraph = () => {
         }
       },
       y:{
+        
         beginAtZero:true,
         ticks:{display:false},
         border:{
@@ -146,7 +147,7 @@ legend:{display:false},
 
   return (
     <div className=''>
-      <h2 className='text-[24px] font-source-code-pro'>Token Timeline</h2>
+      <h2 className='text-[24px] font-source-code-pro ml-[40px]'>Token Timeline</h2>
       <div className='w-full h-[20rem] border-none'> {/* Set border to 'none' */}
         <Line config={config}  actions={actions} options={options} width={600} height={500} data={data} />
       </div>
