@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { CAPTABLE_ADDRESS, CAPTABLE_DATA, captableContrac, captableContract, captableDataContract, getInstance } from '../utils/fhevm';
 import { getReencryptPublicKey } from '../utils/RencryptPublicKey';
 import Web3 from "web3";
-import captableAddress from "../JSON/EncryptedCapTable (7).json";
+import captableAddress from "../JSON/EncryptedCapTable (8).json";
 import Loader from './Loader.jsx';
 
 export default function DataView() {
@@ -14,24 +14,24 @@ export default function DataView() {
   
 
   const dataView = async () => {
+   
     try {
       const addresses = [];
       const instance = await getInstance();
       const reencrypt = await getReencryptPublicKey(CAPTABLE_DATA);
-      console.log(reencrypt);
-      console.log(await instance.hasKeypair(CAPTABLE_DATA));
+     console.log(reencrypt.publicKey);
       const contractDataInstance = await captableDataContract();
 
       const constactInstanceMain = await captableContract()
 
       await window.ethereum.request({ method: 'eth_requestAccounts' });
       const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-      console.log(accounts)
+     
       const key = await constactInstanceMain.adminKey(accounts[0]);
-      console.log(key)
+     
 
       const companyEmploys = await contractDataInstance.viewCompanyemploys(key, reencrypt.publicKey, reencrypt.signature)
-      console.log("TX", companyEmploys);
+     
       const employeeCount = parseInt(await instance.decrypt(CAPTABLE_DATA, companyEmploys));
 
       const web3 = new Web3("https://testnet.inco.org");
@@ -48,18 +48,16 @@ export default function DataView() {
         })
         addresses.push(ad);
       }
-      console.log(addresses);
 
       for (let i = 0; i < addresses.length; i++) {
         const empdetails = await constactInstanceMain.getemployee(key, addresses[i]);
-        console.log(empdetails);
+        
 
         const totalAllocations = await contractDataInstance.viewEmployeTotalAllocation(key, reencrypt.publicKey, reencrypt.signature, addresses[i]);
         const totalAlloc = await instance.decrypt(CAPTABLE_DATA, totalAllocations);
-        console.log(totalAlloc);
-
+       
         
-        console.log(empdetails);
+       
         const addressData = {
           address: addresses[i].toString(),
           name: empdetails[0].toString(),

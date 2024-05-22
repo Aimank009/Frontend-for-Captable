@@ -81,12 +81,12 @@ const handleClick=()=>{
             <div>
             <img className="pt-10 w-[30%] pl-5 " src={logo_2} alt="" />
             <div className="w-[80%] pt-5 pl-10">
-              <h1 className="font-source-code-pro text-[#FFFFFF] text-[60px]">
+              <h1 className="font-source-code-pro text-[#FFFFFF] text-[55px]">
                 Private Captable
               </h1>
 
-              <h1 className="font-source-code-pro text-[#FFFFFF] text-[60px]">
-                Built on FHE
+              <h1 className="font-source-code-pro text-[#FFFFFF] text-[55px]">
+                Built on INCO
               </h1>
 
               <h1 className="font-source-code-pro mt-10 text-[#FFFFFF] text-[18px]">

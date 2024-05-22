@@ -1,45 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { captableContract, getInstance } from '../utils/fhevm';
 import { getReencryptPublicKey } from '../utils/RencryptPublicKey';
 
-
-
-
 const CAPTABLE_ADDRESS = "0x325996bC4d37e5626059a1205dfa683353744002";
-const CAPTABLE_DATA="0xB116e476Ff26DFB937012575Ba9920012bA2Fad2";
 
 const ClaimToken = ({ onClose }) => {
   const [claimAmount, setClaimAmount] = useState('');
+  const [claimableTokens, setClaimableTokens] = useState(0);
 
   const handleChange = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setClaimAmount(e.target.value);
   };
 
-  const handleSubmit = async(e) => {
+  const fetchClaimableTokens = async () => {
+    try {
+      const instance = await getInstance();
+      const contractInstance = await captableContract();
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+      const key = await contractInstance.adminKey(accounts[0]);
+      const claimableAmount = await contractInstance.claimableAmount(key);
+      setClaimableTokens(Number(claimableAmount));
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchClaimableTokens();
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const instance = await getInstance();
       const reencrypt = await getReencryptPublicKey(CAPTABLE_ADDRESS);
       console.log(reencrypt);
-      const contractInstance=await captableContract()
+      const contractInstance = await captableContract();
 
-      const ciphertext=await instance.encrypt32(BigInt(claimAmount));
-      console.log(ciphertext)
+      const ciphertext = await instance.encrypt32(BigInt(claimAmount));
+      console.log(ciphertext);
       await window.ethereum.request({ method: 'eth_requestAccounts' });
       const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-      console.log(accounts)
-      const key=await contractInstance.adminKey(accounts[0]);
-      console.log(key)
+      console.log(accounts);
+      const key = await contractInstance.adminKey(accounts[0]);
+      console.log(key);
 
-      const claimTokens=await contractInstance.claim(ciphertext,key)
-      console.log("Token",claimTokens)
+      const claimTokens = await contractInstance.claim(ciphertext, key);
+      console.log("Token", claimTokens);
 
-      const claimedTokens=await contractInstance.claimableAmount(key)  
-      console.log("Claimed",claimedTokens);
-
+      const claimedTokens = await contractInstance.claimableAmount(key);
+      console.log("Claimed", claimedTokens);
+      setClaimableTokens(Number(claimedTokens)); // Update the claimable token amount
     } catch (error) {
-      console.log("error",error)
+      console.log("error", error);
     }
     setClaimAmount('');
   };
@@ -74,7 +89,7 @@ const ClaimToken = ({ onClose }) => {
             Tokens ready to be Claimed:
           </h1>
           <h2 className="text-[#3A74F2] font-source-code-pro font-semilight text-sm p-3">
-            10,000,000
+            {claimableTokens.toLocaleString()}
           </h2>
         </div>
         <form onSubmit={handleSubmit}>

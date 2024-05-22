@@ -14,11 +14,6 @@ export default function AlreadyOwner() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const instance = await getInstance();
-      const reencrypt = await getReencryptPublicKey(CAPTABLE_ADDRESS);
-     
-      
-
       const constactInstanceMain = await captableContract()
 
       await window.ethereum.request({ method: 'eth_requestAccounts' });

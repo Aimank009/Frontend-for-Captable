@@ -5,7 +5,7 @@ import logo from '../assets/logo.png'
 const LandingPage = () => {
     const navigate=useNavigate()
     const handleCreateComapny=async()=>{
-          navigate('/createCompany')
+          navigate('/createCompanyKey')
     }
     const handleEmploy=()=>{
       navigate('/employeeLogin')
@@ -22,12 +22,12 @@ const LandingPage = () => {
       
       
       <div className="border-t ">
-        <div className=" h-full mt-[10%] ml-[10.28%] flex flex-col items-center  w-[79.44%]  justify-center mb-[5%]">
-          <h1 className="font-source-code-pro text-[450%] text-[#212427]">
-            Private Captable
+        <div className=" h-full mt-[13%] ml-[7%] flex flex-col items-center    w-[85%]  justify-center ">
+          <h1 className="font-source-code-pro text-[400%] text-[#212427]">
+            Private Fully On-Chain Captable
           </h1>
           <h1 className="font-source-code-pro text-[450%] text-[#3A74F2]">
-            Built on FHE
+            Built on INCO
           </h1>
           <h1 className="font-source-code-pro text-[130%] text-center text-[#BDBDBD]">
             Fully Homomorphic Encryption (FHE) enables secure computation on

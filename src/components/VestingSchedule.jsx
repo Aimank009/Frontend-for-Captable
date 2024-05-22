@@ -8,7 +8,7 @@ import {
   vestingContract,
 } from "../utils/fhevm";
 import { getReencryptPublicKey } from "../utils/RencryptPublicKey";
-import moment from "moment";
+import { parse, getUnixTime, addSeconds, fromUnixTime, format } from "date-fns"; 
 import vestingabi from "../JSON/Vesting (3).json";
 import Web3 from "web3";
 
@@ -35,7 +35,6 @@ const VestingSchedule = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-
       const web3 = new Web3("https://testnet.inco.org");
       const contract = new web3.eth.Contract(vestingabi.abi, VESTING_ADDRESS);
 
@@ -56,24 +55,20 @@ const VestingSchedule = ({ onClose }) => {
       const lpac = parseInt(scheduleData.linearPercentageAfterCliff);
       const cp = parseInt(scheduleData.cliffPercentage);
 
-      const startUnix = moment(startdate, "DD-MM-YYYY").unix();
-      const endUnix = moment(enddate, "DD-MM-YYYY").unix();
-      const cliffUnix = moment().add(cliff, "days").unix();
+      const startUnix = getUnixTime(parse(startdate, "yyyy-MM-dd", new Date()));
+      const endUnix = getUnixTime(parse(enddate, "yyyy-MM-dd", new Date()));
 
-      const nextCliffUnix = startUnix + cliff * 24 * 60 * 60;; // Convert days to seconds
-      const momentobj = moment.unix(nextCliffUnix);
-      setNextCliff(momentobj.format("DD-MM-YYYY"));
-      console.log(momentobj.format("DD-MM-YYYY"));
+      const nextCliffUnix = getUnixTime(addSeconds(parse(startdate, "yyyy-MM-dd", new Date()), cliff * 24 * 60 * 60));
+      const nextCliffDate = fromUnixTime(nextCliffUnix);
+      const formattedNextCliff = format(nextCliffDate, "dd-MM-yyyy");
+
+      setNextCliff(formattedNextCliff);
 
       const totalVestingDuration = endUnix - startUnix;
       console.log(startUnix);
       console.log(endUnix);
-      console.log(cliffUnix);
+      console.log(nextCliffUnix);
       console.log(totalVestingDuration);
-
-     
-
-      
 
       const reencrypt = await getReencryptPublicKey(CAPTABLE_DATA);
       console.log(reencrypt);
@@ -93,7 +88,7 @@ const VestingSchedule = ({ onClose }) => {
 
       const period = {
         start: startUnix,
-        cliffDuration: cliffUnix,
+        cliffDuration: nextCliffUnix,
         totalDuration: totalVestingDuration,
         amountTotal: parseInt(allocations),
         releaseAtStartPercentage: sp,
@@ -229,7 +224,7 @@ const VestingSchedule = ({ onClose }) => {
                 Next Cliff in:
               </h1>
               <h1 className="text-[#3A74F2] text-sm font-source-code-pro p-1 ">
-                DD-MM-YYYY
+                {nextCliff || "DD-MM-YYYY"}
               </h1>
             </div>
             <div className="flex">

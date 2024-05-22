@@ -23,14 +23,11 @@ export default function EmployeeLogin() {
       });
       const userAddress = accounts[0];
 
-      console.log(companyKey);
       console.log(userAddress);
-
       const isEmployee = await constactInstanceMain.isEmpoloyee(
         companyKey,
         userAddress
       );
-      console.log("EMp", isEmployee);
       if (isEmployee) {
         navigate(`/dashboard?companyKey=${companyKey}`);
       } else {

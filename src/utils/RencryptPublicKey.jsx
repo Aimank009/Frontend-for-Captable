@@ -33,4 +33,5 @@ export const getReencryptPublicKey = async (contractAddress) => {
   }
   
   return (await instance).getPublicKey(contractAddress);
+  
 };

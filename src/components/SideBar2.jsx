@@ -8,7 +8,7 @@ const SideBar2 = () => {
 
   const handleClick = (heading) => {
     setActiveHeading(heading);
-    navigate("/allocations");
+    navigate("/dashboard");
   };
 
   const isHeadingActive = (heading) => {

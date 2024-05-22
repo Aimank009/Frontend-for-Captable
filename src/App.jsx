@@ -31,7 +31,7 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
-          <Route exact path="/createCompany" element={<CreateCompany />} />
+          {/* <Route exact path="/createCompany" element={<CreateCompany />} /> */}
           <Route exact path="/createCompanyKey" element={<CreateCompanyKey />} />
           <Route exact path="/companyKey" element={<CompanyKey />} />
           <Route exact path="/allocations" element={<Allocations />} />

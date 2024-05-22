@@ -28,10 +28,6 @@ const AddEmployee = ({ onClose }) => {
     e.preventDefault();
     try {
       const instance = await getInstance();
-      const reencrypt = await getReencryptPublicKey(CAPTABLE_ADDRESS);
-      console.log(reencrypt);
-      console.log(await instance.hasKeypair(CAPTABLE_ADDRESS));
-
       const contractInstance = await captableContract();
 
       const amount =formData.amount;

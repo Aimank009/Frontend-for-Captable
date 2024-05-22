@@ -1,17 +1,17 @@
 import { BrowserProvider, AbiCoder, Contract } from "ethers";
 import { initFhevm, createInstance } from "fhevmjs";
 
-import captableAddress from "../JSON/EncryptedCapTable (8).json";
-import captableData from "../JSON/CapTableData (5).json";
-import vestingabi from "../JSON/Vesting (3).json"
+import captableAddress from "../JSON/EncryptedCapTable (9).json";
+import captableData from "../JSON/CapTableData (6).json";
+import vestingabi from "../JSON/Vesting (4).json"
 export const init = async () => {
   await initFhevm();
 };
 
 const FHE_LIB_ADDRESS = "0x000000000000000000000000000000000000005d";
-export const CAPTABLE_ADDRESS = "0x4b93293FFdA44f1924E842b9ed50d5B7bE839045";
-export const CAPTABLE_DATA="0x168FA586911A6E4503af55Ca401aD20a7866AB5D";
-export const VESTING_ADDRESS="0xA80eba4DB6764C06bB7f6f26392A9e31D13F50B4"
+export const CAPTABLE_ADDRESS = "0xc874AFB8c53d5bd284a31ecAE3c2C4B5B015903A";
+export const CAPTABLE_DATA="0x971462599f839e70EC2d7D4B76191Ed674077fBf";
+export const VESTING_ADDRESS="0xc4a1aD756D084C33864a2b312AfAb5F0b22C539B"
 
 export const provider = new BrowserProvider(window.ethereum);
 export let signer;
@@ -47,10 +47,7 @@ export const captableContract = async () => {
   return new Contract(CAPTABLE_ADDRESS, captableAddress.abi, signer);
 };
 
-export const captableContrac = async () => {
-  await setSigner();
-  return new Contract(CAPTABLE_ADDRESS, captableAddress.abi);
-};
+
 
 export const captableDataContract = async () => {
   await setSigner();
@@ -62,5 +59,9 @@ export const vestingContract=async()=>{
   return new Contract(VESTING_ADDRESS,vestingabi.abi,signer)
 }
 
+export const captableContrac = async () => {
+  await setSigner();
+  return new Contract(CAPTABLE_ADDRESS, captableAddress.abi);
+};
 
 

@@ -6,7 +6,7 @@ import { claimed } from '../Pages/Dashboard_emp';
 const SteppedGraph = () => {
   // Sample data for the graph
   const data = {
-    labels: ['18 Mar,2021', '18 Mar,2021', '18 Mar,2021', '18 Mar,2021', '18 Mar,2021', '18 Mar,2021', '18 Mar,2021'],
+    labels: ['May 2020', 'May 2021', 'May 2022', 'May 2023', 'May 2024', 'May 2025', 'May 2026'],
     datasets: [
       {
         label: ['Unlocked','Claimed'],

@@ -94,7 +94,7 @@ export default function CompanyKey() {
             </h1>
 
             <h1 className="font-source-code-pro text-[#FFFFFF] text-[350%]">
-              Built on FHE
+              Built on INCO
             </h1>
 
             <h1 className="font-source-code-pro mt-10 text-[#FFFFFF] text-[100%]">
