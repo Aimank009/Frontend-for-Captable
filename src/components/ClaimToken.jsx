@@ -4,9 +4,10 @@ import { getReencryptPublicKey } from '../utils/RencryptPublicKey';
 
 const CAPTABLE_ADDRESS = "0x325996bC4d37e5626059a1205dfa683353744002";
 
-const ClaimToken = ({ onClose }) => {
+const ClaimToken = ({ onClose,companyKey }) => {
   const [claimAmount, setClaimAmount] = useState('');
   const [claimableTokens, setClaimableTokens] = useState(0);
+
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -17,10 +18,10 @@ const ClaimToken = ({ onClose }) => {
     try {
       const instance = await getInstance();
       const contractInstance = await captableContract();
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
-      const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-      const key = await contractInstance.adminKey(accounts[0]);
-      const claimableAmount = await contractInstance.claimableAmount(key);
+      
+      const request = await contractInstance.request(companyKey)
+      console.log(request);
+      const claimableAmount = await contractInstance.claimableAmount(companyKey);
       setClaimableTokens(Number(claimableAmount));
     } catch (error) {
       console.log("error", error);
@@ -41,16 +42,13 @@ const ClaimToken = ({ onClose }) => {
 
       const ciphertext = await instance.encrypt32(BigInt(claimAmount));
       console.log(ciphertext);
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
-      const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-      console.log(accounts);
-      const key = await contractInstance.adminKey(accounts[0]);
-      console.log(key);
-
-      const claimTokens = await contractInstance.claim(ciphertext, key);
+      
+      const request = await contractInstance.request(companyKey)
+      console.log(request);
+      const claimTokens = await contractInstance.claim(ciphertext, companyKey);
       console.log("Token", claimTokens);
 
-      const claimedTokens = await contractInstance.claimableAmount(key);
+      const claimedTokens = await contractInstance.claimableAmount(companyKey);
       console.log("Claimed", claimedTokens);
       setClaimableTokens(Number(claimedTokens)); // Update the claimable token amount
     } catch (error) {

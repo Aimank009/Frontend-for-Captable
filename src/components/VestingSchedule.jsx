@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import {
   CAPTABLE_DATA,
-  VESTING_ADDRESS,
   captableContract,
   captableDataContract,
   getInstance,
   vestingContract,
 } from "../utils/fhevm";
 import { getReencryptPublicKey } from "../utils/RencryptPublicKey";
-import { parse, getUnixTime, addSeconds, fromUnixTime, format } from "date-fns"; 
-import vestingabi from "../JSON/Vesting (3).json";
-import Web3 from "web3";
+import { parse, getUnixTime, addSeconds, fromUnixTime, format } from "date-fns";
+
+import Loader from "./Loader";
 
 const VestingSchedule = ({ onClose }) => {
   const [allocations, setAllocations] = useState(0);
   const [nextCliff, setNextCliff] = useState("");
+  const [loading, setLoading] = useState(false);
   const [scheduleData, setScheduleData] = useState({
     startDate: "",
     endDate: "",
@@ -34,70 +34,54 @@ const VestingSchedule = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      const web3 = new Web3("https://testnet.inco.org");
-      const contract = new web3.eth.Contract(vestingabi.abi, VESTING_ADDRESS);
-
       const instance = await getInstance();
-
       const contractInstance = await captableContract();
       await window.ethereum.request({ method: "eth_requestAccounts" });
       const accounts = await window.ethereum.request({
         method: "eth_accounts",
       });
       const key = await contractInstance.adminKey(accounts[0]);
-
+      console.log(key);
       const startdate = scheduleData.startDate;
-      const enddate = scheduleData.endDate;
-      const cliff = parseInt(scheduleData.cliff);
+      // const enddate = scheduleData.endDate;
+      // const cliff = parseInt(scheduleData.cliff);
 
       const sp = parseInt(scheduleData.startPercentage);
-      const lpac = parseInt(scheduleData.linearPercentageAfterCliff);
-      const cp = parseInt(scheduleData.cliffPercentage);
+      // const lpac = parseInt(scheduleData.linearPercentageAfterCliff);
+      // const cp = parseInt(scheduleData.cliffPercentage);
 
       const startUnix = getUnixTime(parse(startdate, "yyyy-MM-dd", new Date()));
-      const endUnix = getUnixTime(parse(enddate, "yyyy-MM-dd", new Date()));
 
-      const nextCliffUnix = getUnixTime(addSeconds(parse(startdate, "yyyy-MM-dd", new Date()), cliff * 24 * 60 * 60));
-      const nextCliffDate = fromUnixTime(nextCliffUnix);
-      const formattedNextCliff = format(nextCliffDate, "dd-MM-yyyy");
+      // const endUnix = getUnixTime(parse(enddate, "yyyy-MM-dd", new Date()));
 
-      setNextCliff(formattedNextCliff);
+      // const nextCliffUnix = getUnixTime(addSeconds(parse(startdate, "yyyy-MM-dd", new Date()), cliff * 24 * 60 * 60));
+      // const nextCliffDate = fromUnixTime(nextCliffUnix);
+      // const formattedNextCliff = format(nextCliffDate, "dd-MM-yyyy");
 
-      const totalVestingDuration = endUnix - startUnix;
-      console.log(startUnix);
-      console.log(endUnix);
-      console.log(nextCliffUnix);
-      console.log(totalVestingDuration);
+      // setNextCliff(formattedNextCliff);
 
-      const reencrypt = await getReencryptPublicKey(CAPTABLE_DATA);
-      console.log(reencrypt);
-      const contractDataInstance = await captableDataContract();
+      // const totalVestingDuration = 1716393300 - 1716392700;
+      // console.log(startUnix);
+      // console.log(endUnix);
+      // // console.log(nextCliffUnix);
+      // console.log(totalVestingDuration);
 
-      const companyTotalFunds = await contractDataInstance.viewCompanytotalFund(
-        key,
-        reencrypt.publicKey,
-        reencrypt.signature
+      const vestingInstance = await vestingContract();
+
+      const startDateEncrypt = await instance.encrypt32(startUnix);
+      console.log("startDateEncrypt", startDateEncrypt);
+      console.log(sp);
+      const startPercentageEncrypt = await instance.encrypt32(sp);
+      console.log("startPercentageEncrypt", startPercentageEncrypt);
+      const addVesting = await vestingInstance.addStartTime(
+        startDateEncrypt,
+        startPercentageEncrypt,
+        key
       );
-      console.log("TX", companyTotalFunds);
-      const alloc = await instance.decrypt(CAPTABLE_DATA, companyTotalFunds);
-      setAllocations(alloc.toString());
-      console.log(allocations);
-
-      const captablecontract = await captableContract();
-
-      const period = {
-        start: startUnix,
-        cliffDuration: nextCliffUnix,
-        totalDuration: totalVestingDuration,
-        amountTotal: parseInt(allocations),
-        releaseAtStartPercentage: sp,
-        releaseAtCliffPercentage: cp,
-        linearReleasePercentage: lpac,
-      };
-
-      const addPeriod = await captablecontract.addSchedule(period, key);
-      console.log("Vesting period added successfully:", addPeriod);
+      console.log("Vesting period added successfully:", addVesting);
+      onClose();
     } catch (error) {
       console.error("Error adding vesting period:", error);
     }
@@ -129,6 +113,7 @@ const VestingSchedule = ({ onClose }) => {
             />
           </svg>
         </div>
+        {loading && <Loader />}
         <form onSubmit={handleSubmit}>
           <div className="m-5 flex flex-col gap-10 w-[85%] h-[60%] ">
             <div className="flex space-x-[90px] mt-10 ">

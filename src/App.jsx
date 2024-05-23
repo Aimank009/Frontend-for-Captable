@@ -12,6 +12,8 @@ import Allocations from "./Pages/Allocations.jsx";
 import AlreadyOwner from "./Pages/AlreadyOwner.jsx";
 import Dashboard_emp from "./Pages/Dashboard_emp.jsx";
 import EmployeeLogin from "./Pages/EmployeeLogin.jsx";
+import TokenCreation from "./Pages/TokenCreation.jsx";
+import Loader from "./Components/Loader.jsx";
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(true);
@@ -31,14 +33,14 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
-          {/* <Route exact path="/createCompany" element={<CreateCompany />} /> */}
           <Route exact path="/createCompanyKey" element={<CreateCompanyKey />} />
           <Route exact path="/companyKey" element={<CompanyKey />} />
+          <Route exact path="/createToken" element={<TokenCreation/>} />
           <Route exact path="/allocations" element={<Allocations />} />
           <Route exact path="/alreadyOwner" element={<AlreadyOwner />} />
           <Route exact path="/dashboard" element={<Dashboard_emp />} />
           <Route exact path="/employeeLogin" element={<EmployeeLogin/>} />
-         
+          <Route exact path="/" element={<Loader />} />
         </Routes>
       </Router>
     </>

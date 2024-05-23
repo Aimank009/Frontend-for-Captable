@@ -6,7 +6,7 @@ import SteppedGraph from "../Components/MyChart.jsx";
 import { CAPTABLE_DATA, captableDataContract, getInstance } from "../utils/fhevm.jsx";
 import { getReencryptPublicKey } from "../utils/RencryptPublicKey.jsx";
 import { useLocation } from "react-router-dom";
-
+import logo from '../assets/logo.png'
 export const claimed = {
   claim: "24",
 };
@@ -86,9 +86,10 @@ export default function Dashboard_emp() {
   return (
     <>
       <div className="flex h-[100vh]">
-        <SideBar2 />
+        {/* <SideBar2 /> */}
         <div className="flex-1 overflow-auto">
-          <div className="pt-1">
+        <div className=" flex items-center space-x-[70%]">
+          <img onClick={()=>navigate('/')} className=" pl-5 py-2 cursor-pointer" src={logo} alt="" />
             <Connect>{(account, provider) => null}</Connect>
           </div>
           
@@ -157,7 +158,8 @@ export default function Dashboard_emp() {
           </div>
         </div>
       </div>
-      {open && <ClaimToken onClose={handleClose} />}
+     
+      {open && <ClaimToken onClose={handleClose} companyKey={companyKey} />}
     </>
   );
 }

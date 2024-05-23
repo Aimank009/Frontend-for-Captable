@@ -37,11 +37,11 @@ const SearchField = () => {
                         </form>
                         </div>
                         <div className='flex gap-5'>
-                            <button onClick={handleClick} className='w-[161px] font-medium text-[#3A74F2]  h-[40px] border rounded-[12px] border-[#3A74F2] font-source-code-pro '>
+                            <button onClick={handleClick} className='w-[161px] focus:ring-4  transform active:scale-75 transition-transform font-medium text-[#3A74F2]  h-[40px] border rounded-[12px] border-[#3A74F2] font-source-code-pro '>
                                 Add Employee
                             </button>
                             {open && <AddEmployee onClose={handleClose} />}
-                            <button className=" w-[161px] font-medium font-source-code-pro text-[#3A74F2] justify-center h-[40px] border rounded-[12px] border-[#3A74F2] flex gap-2 items-center mr-[10px]">
+                            <button className=" w-[161px] focus:ring-4  transform active:scale-75 transition-transform font-medium font-source-code-pro text-[#3A74F2] justify-center h-[40px] border rounded-[12px] border-[#3A74F2] flex gap-2 items-center mr-[10px]">
                                 <svg
                                     width="14"
                                     height="14"

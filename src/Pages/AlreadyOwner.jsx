@@ -71,7 +71,7 @@ export default function AlreadyOwner() {
           )}
           <div className="  flex items-center justify-center "><button 
             type="submit" 
-            className=" flex items-center justify-center text-center w-[88%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px] mr-[10px] mt-[5%] text-[#FFFFFF]"
+            className=" focus:ring-4 shadow-lg transform active:scale-75 transition-transform flex items-center justify-center text-center w-[88%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px] mr-[10px] mt-[5%] text-[#FFFFFF]"
           >
             Go to Dashboard
           </button></div>

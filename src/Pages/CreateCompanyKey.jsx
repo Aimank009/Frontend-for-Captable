@@ -93,7 +93,7 @@ export default function CreateCompanyKey() {
 
             {generating ? (
               <div>
-                <h1 className="ml-9 text-center w-[85%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px] mr-[10px] mt-[8%] text-[#FFFFFF]">
+                <h1 className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform ml-9 text-center w-[85%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px] mr-[10px] mt-[8%] text-[#FFFFFF]">
                   Generating Company Key...
                 </h1>
                 <Loader />
@@ -101,7 +101,7 @@ export default function CreateCompanyKey() {
             ) : (
               <button
                 onClick={handleGeneratekey}
-                className="ml-9 text-center w-[85%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px] mr-[10px] mt-[8%] text-[#FFFFFF]"
+                className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform ml-9 text-center w-[85%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px] mr-[10px] mt-[8%] text-[#FFFFFF]"
               >
                 Generate Company Key
               </button>

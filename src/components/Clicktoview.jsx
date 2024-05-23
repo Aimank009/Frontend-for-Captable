@@ -40,15 +40,16 @@ function ClickToViewContent() {
    
       const employee = await instance.decrypt(CAPTABLE_DATA, companyEmploys);
       setEmployee(employee.toString());
-
-
+      
       const companyTotalFunds = await contractDataInstance.viewCompanytotalFund(
         key,
         reencrypt.publicKey,
         reencrypt.signature
       );
   
+      console.log(companyTotalFunds);
       const alloc = await instance.decrypt(CAPTABLE_DATA, companyTotalFunds);
+      console.log(alloc);
       setAllocations(alloc.toString());
 
 
@@ -60,7 +61,7 @@ function ClickToViewContent() {
         );
      
       const unlock = await instance.decrypt(CAPTABLE_DATA, companyTotalLocked);
-      setUnlocked(unlock.toString());
+      setUnlocked((allocations-parseInt(unlock.toString())));
     
     } catch (error) {
       console.log("Error", error);

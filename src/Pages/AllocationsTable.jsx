@@ -28,14 +28,14 @@ const AllocationsTable = ({ employNumber }) => {
         <div className="flex gap-5 w-[50%] mr-[20px]  justify-end items-end ">
           <button
             onClick={handleVestingClick}
-            className="font-source-code-pro  text-center text-[#3A74F2] w-[30%] p-2 font-medium  border rounded-lg border-[#3A74F2]"
+            className="font-source-code-pro focus:ring-4  transform active:scale-75 transition-transform text-center text-[#3A74F2] w-[25%] p-2 font-medium  border rounded-lg border-[#3A74F2]"
           >
             Vesting Schedule
           </button>
           {employNumber > 0 ? (
             <button
               onClick={handleRefresh}
-              className="font-source-code-pro font-medium flex items-center text-[#3A74F2] p-2  gap-2  border rounded-lg border-[#3A74F2] "
+              className="font-source-code-pro focus:ring-4 w-[25%] transform active:scale-75 transition-transform font-medium flex items-center text-[#3A74F2] p-2  gap-2  border rounded-lg border-[#3A74F2] "
             >
               <svg
                 className="p-1"
@@ -58,7 +58,7 @@ const AllocationsTable = ({ employNumber }) => {
           ) : (
             <button
               onClick={handleRefresh}
-              className="font-source-code-pro font-medium flex items-center text-[#BDBDBD] p-2  gap-2  border rounded-lg border-[#BDBDBD] "
+              className="font-source-code-pro focus:ring-4  w-[25%] transform active:scale-75 transition-transform font-medium flex items-center text-[#BDBDBD] p-2  gap-2  border rounded-lg border-[#BDBDBD] "
             >
               <svg
                 width="24"

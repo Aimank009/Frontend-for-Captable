@@ -26,7 +26,7 @@ export default function CompanyKey() {
 
 
   const handleClick = () => {
-    navigate("/allocations");
+    navigate("/createToken");
   };
 
   return (
@@ -79,9 +79,9 @@ export default function CompanyKey() {
         </div>
         <h1
           onClick={handleClick}
-          className="ml-8  text-center w-[88%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px] mr-[10px] mt-[3.33%] text-[#FFFFFF]"
+          className="ml-8 focus:ring-4 shadow-lg transform active:scale-75 transition-transform  text-center w-[88%] font-source-code-pro cursor-pointer rounded-lg bg-[#3A74F2] px-[24px] py-[12px] mr-[10px] mt-[3.33%] text-[#FFFFFF]"
         >
-          Go to Dashboard
+          Create Token
         </h1>
       </div>
 

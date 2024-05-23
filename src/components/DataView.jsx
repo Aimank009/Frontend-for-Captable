@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { CAPTABLE_ADDRESS, CAPTABLE_DATA, captableContrac, captableContract, captableDataContract, getInstance } from '../utils/fhevm';
 import { getReencryptPublicKey } from '../utils/RencryptPublicKey';
 import Web3 from "web3";
-import captableAddress from "../JSON/EncryptedCapTable (8).json";
+import captableAddress from "../JSON/EncryptedCapTable (1) (1).json";
 import Loader from './Loader.jsx';
 
 export default function DataView() {
@@ -50,7 +50,7 @@ export default function DataView() {
       }
 
       for (let i = 0; i < addresses.length; i++) {
-        const empdetails = await constactInstanceMain.getemployee(key, addresses[i]);
+        const empdetails = await contractDataInstance.getEmployee(key, addresses[i]);
         
 
         const totalAllocations = await contractDataInstance.viewEmployeTotalAllocation(key, reencrypt.publicKey, reencrypt.signature, addresses[i]);

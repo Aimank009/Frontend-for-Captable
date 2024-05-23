@@ -7,6 +7,7 @@ import ActualDashboard from "../Components/ActualDashboard.jsx";
 import DataView from "../Components/DataView.jsx";
 import { Connect } from "../Connect.jsx";
 import SideBar from "../Components/SideBar.jsx";
+import logo from '../assets/logo.png'
 import {
   CAPTABLE_DATA,
   captableContract,
@@ -14,14 +15,12 @@ import {
   getInstance,
 } from "../utils/fhevm.jsx";
 import { getReencryptPublicKey } from "../utils/RencryptPublicKey.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Allocations = () => {
   const [noEmploy, setNoEmploy] = useState(0);
   const dataFetchedRef = useRef(false);
-
-  const [instances,setInstances]=useState(null)
-  const [publicKey,setPublicKey]=useState(null)
-  const [signature,setSignature]=useState(null)
+const navigate=useNavigate();
   
   const employNumber = async () => {
     if (dataFetchedRef.current) return;
@@ -29,7 +28,6 @@ const Allocations = () => {
     try {
       const instance = await getInstance();
       const reencrypt = await getReencryptPublicKey(CAPTABLE_DATA);
-      console.log(reencrypt.publicKey);
       const contractDataInstance = await captableDataContract();
       
       const constactInstanceMain = await captableContract();
@@ -45,6 +43,8 @@ const Allocations = () => {
         reencrypt.publicKey,
         reencrypt.signature
       );
+      console.log(key);
+      console.log(companyEmploys);
       setNoEmploy(
         parseInt(await instance.decrypt(CAPTABLE_DATA, companyEmploys))
       );
@@ -66,11 +66,10 @@ const Allocations = () => {
   return (
     <>
       <div className="flex h-[100vh]">
-        <div className=" w-[20%] h-full">
-          <SideBar />
-        </div>
+        
         <div className="flex-1 w-[70%] overflow-y-auto">
-          <div className="mt-[1%]">
+        <div className=" flex items-center space-x-[70%]">
+          <img onClick={()=>navigate('/')} className=" pl-5 py-2 cursor-pointer" src={logo} alt="" />
             <Connect>{(account, provider) => null}</Connect>
           </div>
           {open && (
@@ -99,7 +98,7 @@ const Allocations = () => {
               </div>
               <button
                 onClick={handleClick}
-                className="cursor-pointer w-[13.5%%] h-[10%] flex items-center justify-center gap-2 font-source-code-pro border border-[#3A74F2] rounded-lg text-[#3A74F2] p-4"
+                className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform cursor-pointer w-[13.5%%] h-[10%] flex items-center justify-center gap-2 font-source-code-pro border border-[#3A74F2] rounded-lg text-[#3A74F2] p-4"
               >
                 Add Employee
                 <svg

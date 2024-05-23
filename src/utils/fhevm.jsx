@@ -1,17 +1,17 @@
 import { BrowserProvider, AbiCoder, Contract } from "ethers";
 import { initFhevm, createInstance } from "fhevmjs";
 
-import captableAddress from "../JSON/EncryptedCapTable (9).json";
-import captableData from "../JSON/CapTableData (6).json";
-import vestingabi from "../JSON/Vesting (4).json"
+import captableAddress from "../JSON/EncryptedCapTable (2) (1).json";
+import captableData from "../JSON/CapTableData (11).json";
+import vestingabi from "../JSON/Vesting (1).json"
 export const init = async () => {
   await initFhevm();
 };
 
 const FHE_LIB_ADDRESS = "0x000000000000000000000000000000000000005d";
-export const CAPTABLE_ADDRESS = "0xc874AFB8c53d5bd284a31ecAE3c2C4B5B015903A";
-export const CAPTABLE_DATA="0x971462599f839e70EC2d7D4B76191Ed674077fBf";
-export const VESTING_ADDRESS="0xc4a1aD756D084C33864a2b312AfAb5F0b22C539B"
+export const CAPTABLE_ADDRESS = "0xc1972C85b58E2c14E5B2c2071C9AfCbdCD352Fb0";
+export const CAPTABLE_DATA="0xe78d8b68823c5914c5ebA54421351425e3d512d7";
+export const VESTING_ADDRESS="0xe5dDe0926255FEB9a082a6bf0683CFC38e5ee5b5"
 
 export const provider = new BrowserProvider(window.ethereum);
 export let signer;
